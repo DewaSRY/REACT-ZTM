@@ -1,47 +1,28 @@
 //
 import style from "./style/FormWrapper.module.scss";
 
-import { FormInput } from "../../component/Input";
-import { Button } from "../../component/Button";
-import { BUTTON_TYPE_CLASSES } from "../../component/UI.types";
-import {
-  signInAuthUserWithEmailAndPassword,
-  signInWithGooglePopup,
-  createUserDocumentFromAuth,
-} from "../../utils/Firebase.utils";
+import { FormInput, BUTTON_TYPE_CLASSES, Button } from "../../component";
+
 import { useState } from "react";
+import { useUser } from "../../hooks";
 const defaultFormFields = {
   email: "",
   password: "",
 };
-
 export function SignIn() {
   const [formField, setFormField] = useState(defaultFormFields);
   const { email, password } = formField;
-  const handelChange = (event) => {
+  const handelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormField({ ...formField, [name]: value });
   };
+  const { googleLogin, emailLogin } = useUser();
+  const LogGoogleUser = () => googleLogin();
 
-  async function LogGoogleUser() {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
-  }
   async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    try {
-      await signInAuthUserWithEmailAndPassword(email, password);
-      setFormField(defaultFormFields);
-    } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
-          return alert("incorrect password");
-        case "auth/user-not-found":
-          return alert("Email not found ");
-        default:
-          console.log("some things was wrong", error);
-      }
-    }
+    setFormField(defaultFormFields);
+    emailLogin(email, password);
   }
   return (
     <div className={style.formWrapper}>
@@ -50,7 +31,7 @@ export function SignIn() {
       <form action="" onSubmit={submitHandler}>
         <FormInput
           label={"Email"}
-          // type="email"
+          type="email"
           onChange={handelChange}
           name="email"
           value={email}
@@ -58,7 +39,7 @@ export function SignIn() {
         />
         <FormInput
           label={"Password"}
-          // type="password"
+          type="password"
           onChange={handelChange}
           name="password"
           value={password}

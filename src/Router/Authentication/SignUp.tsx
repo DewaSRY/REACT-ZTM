@@ -1,13 +1,9 @@
 //
 import style from "./style/FormWrapper.module.scss";
 
-import { FormInput } from "../../component/Input";
-import { Button } from "../../component/Button";
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from "../../utils/Firebase.utils";
+import { FormInput, Button } from "../../component";
 
+import { useUser } from "../../hooks";
 import { useState } from "react";
 const defaultFormFields = {
   displayName: "",
@@ -19,6 +15,7 @@ const defaultFormFields = {
 export function SignUp() {
   const [formField, setFormField] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formField;
+  const { createUser } = useUser();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormField({ ...formField, [name]: value });
@@ -27,21 +24,10 @@ export function SignUp() {
     event.preventDefault();
     if (password !== confirmPassword) {
       alert("your password does not match");
+      return;
     }
-    try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await createUserDocumentFromAuth(user, { displayName });
-      setFormField(defaultFormFields);
-    } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("email already in use");
-      } else {
-        alert(`"something was wrong", &{error}`);
-      }
-    }
+    setFormField(defaultFormFields);
+    await createUser(displayName, email, password);
   }
 
   return (

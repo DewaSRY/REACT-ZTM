@@ -1,20 +1,26 @@
 import { createContext, useEffect, useReducer, PropsWithChildren } from "react";
 import { User } from "firebase/auth";
 import { Action, UserType } from "./User.Type";
+import { logInWithGoogle, logInWithEmail, registerUser } from "./User.action";
 import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener,
 } from "../../utils/Firebase.utils";
-interface IUserContex {
+interface IUserContext {
   currentUser: null | User;
+  googleLogin: () => void;
+  emailLogin: (email: string, password: string) => void;
+  createUser: (name: string, email: string, password: string) => void;
 }
 
-export const UserContext = createContext<IUserContex>({
+export const UserContext = createContext<IUserContext>({
   currentUser: null,
-  // setCurrentUser: () => {},
+  googleLogin: () => {},
+  emailLogin: () => {},
+  createUser: () => {},
 });
 
-const userReducer = (state: IUserContex, action: Action) => {
+const userReducer = (state: IUserContext, action: Action) => {
   const { type } = action;
   switch (type) {
     case UserType.SET_CURRENT_USER:
@@ -23,11 +29,14 @@ const userReducer = (state: IUserContex, action: Action) => {
         currentUser: action.payload,
       };
     default:
-      throw new Error(`unheandel type ${type} in userReducer`);
+      throw new Error(`un handel type ${type} in userReducer`);
   }
 };
 const INITIAL_STATE = {
   currentUser: null,
+  googleLogin: () => {},
+  emailLogin: () => {},
+  createUser: () => {},
 };
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
@@ -48,8 +57,16 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     });
     return unsubscribe;
   }, []);
+  const googleLogin = () => logInWithGoogle();
+  const emailLogin = (email: string, password: string) =>
+    logInWithEmail(email, password);
+  const createUser = (name: string, email: string, password: string) =>
+    registerUser(name, email, password);
   const value = {
     currentUser,
+    googleLogin,
+    emailLogin,
+    createUser,
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

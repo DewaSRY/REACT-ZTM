@@ -4,8 +4,8 @@ type IInput = {
   label: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export function FormInput({ label, ...otherProps }: IInput) {
-  const inputShirk = otherProps.value ? style.shrink : "";
+export function Inputs({ label, ...otherProps }: IInput) {
+  const inputShirk = otherProps.value ? style["form-input-label"] : "";
   return (
     <div className={style.group}>
       <input className={style["form-input"]} {...otherProps} />

@@ -1,7 +1,6 @@
 // import { SignIn } from "./SignIn";
 import style from "./style/Authentication.module.scss";
-import { FormInput, BUTTON_TYPE_CLASSES, Button } from "../../component";
-import { useState } from "react";
+import { BUTTON_TYPE_CLASSES, Button, Forms } from "../../component";
 import { useUser } from "../../hooks";
 
 const signForm = {
@@ -9,40 +8,26 @@ const signForm = {
   password: "",
 };
 function SignInForm() {
-  const [formField, setFormField] = useState(signForm);
-  const { email, password } = formField;
-  const handelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormField({ ...formField, [name]: value });
-  };
   const { googleLogin, emailLogin } = useUser();
-
-  async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setFormField(signForm);
+  let email: string;
+  let password: string;
+  const handleInputs = (inputs: typeof signForm) => {
+    email = inputs.email;
+    password = inputs.password;
+  };
+  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     emailLogin(email, password);
-  }
+  };
   return (
     <div className={style.formWrapper}>
       <h2>Log In Here</h2>
       <span>Sign up with your email and password</span>
-      <form action="" onSubmit={submitHandler}>
-        <FormInput
-          label={"Email"}
-          type="email"
-          onChange={handelChange}
-          name="email"
-          value={email}
-          required
-        />
-        <FormInput
-          label={"Password"}
-          type="password"
-          onChange={handelChange}
-          name="password"
-          value={password}
-          required
-        />
+      <Forms
+        inputs={signForm}
+        onSubmitForm={handleSubmitForm}
+        inputsUpdate={handleInputs}
+      >
         <div className={style["buttons-container"]}>
           <Button type="submit">SIGN IN </Button>
           <Button
@@ -53,81 +38,53 @@ function SignInForm() {
             Sign in with google
           </Button>
         </div>
-      </form>
+      </Forms>
     </div>
   );
 }
-
 const signUpForm = {
   displayName: "",
   email: "",
   password: "",
   confirmPassword: "",
 };
-
 function SignUpForm() {
-  const [formField, setFormField] = useState(signUpForm);
-  const { displayName, email, password, confirmPassword } = formField;
   const { createUser } = useUser();
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormField({ ...formField, [name]: value });
+  let email: string;
+  let password: string;
+  let displayName: string;
+  let confirmPassword: string;
+  const handleInputs = (inputs: typeof signUpForm) => {
+    email = inputs.email;
+    password = inputs.password;
+    displayName = inputs.displayName;
+    confirmPassword = inputs.confirmPassword;
   };
-  async function submitHandle(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (password !== confirmPassword) {
-      alert("your password does not match");
-      return;
+  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (confirmPassword === password) {
+      createUser(displayName, email, password);
+    } else {
+      alert(`password doesn't match withe the confirmation`);
     }
-    setFormField(signUpForm);
-    createUser(displayName, email, password);
-  }
+  };
   return (
     <div className={style.formWrapper}>
-      <h2>Don't have an account</h2>
+      <h2>Log In Here</h2>
       <span>Sign up with your email and password</span>
-      <form action="" onSubmit={submitHandle}>
-        <FormInput
-          label="Display Name"
-          type="text"
-          required
-          onChange={handleChange}
-          name="displayName"
-          value={displayName}
-        />
-        <FormInput
-          label="Email"
-          type="email"
-          required
-          onChange={handleChange}
-          name="email"
-          value={email}
-        />
-        <FormInput
-          label="Password"
-          type="password"
-          required
-          onChange={handleChange}
-          name="password"
-          value={password}
-          autoComplete="on"
-        />
-        <FormInput
-          label="Confirm Password"
-          type="password"
-          required
-          onChange={handleChange}
-          name="confirmPassword"
-          value={confirmPassword}
-          autoComplete="on"
-        />
+      <Forms
+        inputs={signUpForm}
+        onSubmitForm={handleSubmitForm}
+        inputsUpdate={handleInputs}
+      >
         <div className={style["buttons-container"]}>
           <Button type="submit">Submit</Button>
         </div>
-      </form>
+      </Forms>
     </div>
   );
 }
+
 export function Authentication() {
   return (
     <div className={style["authentication-container"]}>

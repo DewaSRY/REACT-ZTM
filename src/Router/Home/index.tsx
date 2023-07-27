@@ -3,12 +3,6 @@ import { Link } from "react-router-dom";
 
 import style from "./style/HomeDirectory.module.scss";
 
-export function HomeDirectory() {
-  const homePage = CATAGORIES.map((category, id) => (
-    <CategoryPage key={id} items={category} />
-  ));
-  return <div className={style["Directories-container"]}>{homePage}</div>;
-}
 const CategoryPage = ({ items }) => {
   const { imageUrl, title } = items;
   return (
@@ -28,3 +22,9 @@ const CategoryPage = ({ items }) => {
     </div>
   );
 };
+export function HomeDirectory() {
+  const homePage = CATAGORIES.map((category, id) => (
+    <CategoryPage key={id} items={category} />
+  ));
+  return <div className={style["Directories-container"]}>{homePage}</div>;
+}

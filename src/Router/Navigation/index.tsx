@@ -1,18 +1,12 @@
 import style from "./Navigation.module.scss";
+import { useNavigate } from "react-router-dom";
 import { Crwn, ShoppingBags } from "../../Assets";
 import { Outlet, Link } from "react-router-dom";
 import { signOutUser } from "../../utils/Firebase.utils";
 import { useUser, useCart } from "../../hooks";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../../component/Button";
-interface ICartItems {
-  cartItem: {
-    name: string;
-    quantity: number;
-    imageUrl: string;
-    price: number;
-  };
-}
+import { Button } from "../../component";
+import { CartItems } from "../../Store";
+
 const SignInLink = () => (
   <Link className={style["nav-link"]} to="Authentication">
     SIGN IN
@@ -24,7 +18,7 @@ const SignOutLink = () => (
     SIGN OUT
   </span>
 );
-const CartItem = ({ cartItem }: ICartItems) => {
+const CartItem = ({ cartItem }: { cartItem: CartItems }) => {
   const { name, quantity, imageUrl, price } = cartItem;
   return (
     <div className={style["cart-item-container"]}>

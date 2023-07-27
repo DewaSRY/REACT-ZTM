@@ -35,7 +35,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
       0
     );
     const payload = {
-      cartItems,
+      cartItems: items,
       cartCount: newCartCount,
       cartTotal: newCartTotal,
     };
@@ -46,6 +46,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
   };
   const addItems = (items: Product) => {
     const newCartItems = addCartItem(cartItems, items);
+    console.log(newCartItems);
     updateCartItemsReducer(newCartItems);
   };
   const removeItems = (items: Product) => {
@@ -54,7 +55,7 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
   };
   const clearItems = (items: Product) => {
     const newCartItems = clearCartItem(cartItems, items);
-    updateCartItemsReducer(newCartItems!);
+    updateCartItemsReducer(newCartItems);
   };
   const setIsCartOpen = () =>
     dispatch({ type: CartActionType.SET_IS_CART_OPEN });

@@ -1,6 +1,17 @@
-import style from "./style/Button.module.scss";
+import style from "./Button.module.scss";
 import { ButtonHTMLAttributes } from "react";
-import { ButtonTypes } from "./UI.types";
+
+// eslint-disable-next-line react-refresh/only-export-components
+export enum BUTTON_TYPE_CLASSES {
+  BASE = "BASE",
+  GOOGLE = "google-sign-in",
+  INVERTED = "inverted",
+}
+
+type ButtonTypes =
+  | BUTTON_TYPE_CLASSES.BASE
+  | BUTTON_TYPE_CLASSES.GOOGLE
+  | BUTTON_TYPE_CLASSES.INVERTED;
 
 type ButtonProps = {
   children: React.ReactNode;

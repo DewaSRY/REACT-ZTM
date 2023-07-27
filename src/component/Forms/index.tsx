@@ -1,5 +1,5 @@
-import style from "./style/Forms.module.scss";
-import { Inputs } from "./Input";
+import style from "./Forms.module.scss";
+import { Inputs } from "../Inputs";
 import {
   useState,
   FormHTMLAttributes,

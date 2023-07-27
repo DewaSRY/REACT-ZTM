@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { expect, it } from "vitest";
 import { render } from "@testing-library/react";
-import { Button } from "../Button";
-import { BUTTON_TYPE_CLASSES } from "../UI.types";
+import { Button, BUTTON_TYPE_CLASSES } from "./index";
 
 describe("button tests", () => {
   let suit: HTMLElement;

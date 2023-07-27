@@ -1,4 +1,4 @@
-import style from "./style/Input.module.scss";
+import style from "./Input.module.scss";
 import { InputHTMLAttributes } from "react";
 type IInput = {
   label: string;

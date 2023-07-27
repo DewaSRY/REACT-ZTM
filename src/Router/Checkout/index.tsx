@@ -1,7 +1,36 @@
-import { CheckoutItem } from "./CheckoutItem";
-
 import style from "./style/Checkout.module.scss";
 import { useCart } from "../../hooks";
+import { Chevron, CHEVRON_TYPE_CLASSES } from "../../component";
+// import style from "./style/CheckoutItem.module.scss";
+
+const CheckoutItem = ({ cartItem }) => {
+  const { name, imageUrl, price, quantity } = cartItem;
+  const { addItems, removeItems, clearItems } = useCart();
+  return (
+    <div className={style["checkout-item-container"]}>
+      <div className={style["image-container"]}>
+        <img src={imageUrl} alt={`${name}`} />
+      </div>
+      <span className={style.name}> {name} </span>
+      <span className={style.quantity}>
+        <Chevron
+          chevron={CHEVRON_TYPE_CLASSES.LEFT}
+          onClick={() => removeItems(cartItem)}
+        />
+        <span className={style.value}>{quantity}</span>
+        <Chevron
+          chevron={CHEVRON_TYPE_CLASSES.RIGHT}
+          onClick={() => addItems(cartItem)}
+        />
+      </span>
+      <span className={style.price}> {price}</span>
+      <Chevron
+        chevron={CHEVRON_TYPE_CLASSES.CROSS}
+        onClick={() => clearItems(cartItem)}
+      />
+    </div>
+  );
+};
 const HeadTable = ["Product", "Description", "Quantity", "Price", "Remove"];
 export function Checkout() {
   const { cartTotal, cartItems } = useCart();
@@ -16,7 +45,7 @@ export function Checkout() {
   return (
     <div className={style["checkout-container"]}>
       <div className={style["checkout-header"]}>{headTable}</div>
-      {cartItems.length > 0 ? CheckOutItems : <h1>Sope noww</h1>}
+      {cartItems.length > 0 ? CheckOutItems : <h1>Shope Now</h1>}
       <div className={style["total"]}>TOTAL: ${cartTotal}</div>
     </div>
   );

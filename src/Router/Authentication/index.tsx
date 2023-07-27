@@ -4,14 +4,11 @@ import { FormInput, BUTTON_TYPE_CLASSES, Button } from "../../component";
 import { useState } from "react";
 import { useUser } from "../../hooks";
 
-//
-// import style from "./style/FormWrapper.module.scss";
-
 const signForm = {
   email: "",
   password: "",
 };
-function SignIn() {
+function SignInForm() {
   const [formField, setFormField] = useState(signForm);
   const { email, password } = formField;
   const handelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +65,7 @@ const signUpForm = {
   confirmPassword: "",
 };
 
-function SignUp() {
+function SignUpForm() {
   const [formField, setFormField] = useState(signUpForm);
   const { displayName, email, password, confirmPassword } = formField;
   const { createUser } = useUser();
@@ -85,7 +82,6 @@ function SignUp() {
     setFormField(signUpForm);
     createUser(displayName, email, password);
   }
-
   return (
     <div className={style.formWrapper}>
       <h2>Don't have an account</h2>
@@ -132,12 +128,11 @@ function SignUp() {
     </div>
   );
 }
-
 export function Authentication() {
   return (
     <div className={style["authentication-container"]}>
-      <SignIn />
-      <SignUp />
+      <SignInForm />
+      <SignUpForm />
     </div>
   );
 }

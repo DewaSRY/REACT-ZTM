@@ -1,4 +1,4 @@
-import style from "./style/Navigation.module.scss";
+import style from "./Navigation.module.scss";
 import { Crwn, ShoppingBags } from "../../Assets";
 import { Outlet, Link } from "react-router-dom";
 import { signOutUser } from "../../utils/Firebase.utils";

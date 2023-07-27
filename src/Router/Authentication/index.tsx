@@ -1,5 +1,5 @@
 // import { SignIn } from "./SignIn";
-import style from "./style/Authentication.module.scss";
+import style from "./Authentication.module.scss";
 import { BUTTON_TYPE_CLASSES, Button, Forms } from "../../component";
 import { useUser } from "../../hooks";
 
@@ -28,16 +28,14 @@ function SignInForm() {
         onSubmitForm={handleSubmitForm}
         inputsUpdate={handleInputs}
       >
-        <div className={style["buttons-container"]}>
-          <Button type="submit">SIGN IN </Button>
-          <Button
-            type="button"
-            buttonType={BUTTON_TYPE_CLASSES.GOOGLE}
-            onClick={() => googleLogin()}
-          >
-            Sign in with google
-          </Button>
-        </div>
+        <Button type="submit">SIGN IN </Button>
+        <Button
+          type="button"
+          buttonType={BUTTON_TYPE_CLASSES.GOOGLE}
+          onClick={() => googleLogin()}
+        >
+          Sign in with google
+        </Button>
       </Forms>
     </div>
   );
@@ -77,9 +75,7 @@ function SignUpForm() {
         onSubmitForm={handleSubmitForm}
         inputsUpdate={handleInputs}
       >
-        <div className={style["buttons-container"]}>
-          <Button type="submit">Submit</Button>
-        </div>
+        <Button type="submit">Submit</Button>
       </Forms>
     </div>
   );

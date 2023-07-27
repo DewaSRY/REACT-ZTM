@@ -1,7 +1,6 @@
+import style from "./HomeDirectory.module.scss";
 import { CATAGORIES } from "../../Assets/CATAGORIES";
 import { Link } from "react-router-dom";
-
-import style from "./style/HomeDirectory.module.scss";
 
 const CategoryPage = ({ items }) => {
   const { imageUrl, title } = items;

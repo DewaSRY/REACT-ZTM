@@ -1,7 +1,11 @@
 import { createContext, useEffect, useReducer, PropsWithChildren } from "react";
 import { User } from "firebase/auth";
-import { Action, UserType } from "./User.Type";
-import { logInWithGoogle, logInWithEmail, registerUser } from "./User.action";
+import { Action, UserType } from "../store-type/User.Type";
+import {
+  logInWithGoogle,
+  logInWithEmail,
+  registerUser,
+} from "../action-context/User.action";
 import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener,

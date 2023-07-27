@@ -1,8 +1,12 @@
 import { useReducer, PropsWithChildren } from "react";
 import { CartContext } from "./Cert.Context";
-import { CartActionType, ProductItems } from "./Cart.Type";
-import { addCartItem, clearCartItem, removeCartItem } from "./Cart.Action";
-import { CartReducer } from "./Cart.Reducer";
+import { CartActionType, ProductItems } from "../store-type/Cart.Type";
+import {
+  addCartItem,
+  clearCartItem,
+  removeCartItem,
+  CartReducer,
+} from "../action-context/Cart.Action";
 
 export const CartProvider = ({ children }: PropsWithChildren) => {
   const [initiateState, dispatch] = useReducer(CartReducer, {
@@ -31,7 +35,6 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
       payload: payload,
     });
   };
-
   const addItems = (items: ProductItems) => {
     const newCartItems = addCartItem(cartItems, items);
     updateCartItemsReducer(newCartItems);

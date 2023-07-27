@@ -1,5 +1,11 @@
-import { ProductItems } from "./Cart.Type";
-export const addCartItem = (items: ProductItems[], product: ProductItems) => {
+import {
+  CartActionType,
+  ICartState,
+  CartAction,
+  ProductItems,
+  product,
+} from "../store-type";
+export const addCartItem = (items: ProductItems[], product: product) => {
   const existingCartItem = items.find((Item) => Item.id === product.id);
   if (existingCartItem) {
     return items.map((item) =>
@@ -8,10 +14,7 @@ export const addCartItem = (items: ProductItems[], product: ProductItems) => {
   }
   return [...items, { ...product, quantity: 1 }];
 };
-export const removeCartItem = (
-  items: ProductItems[],
-  product: ProductItems
-) => {
+export const removeCartItem = (items: ProductItems[], product: product) => {
   const existingCartItem = items.find((Item) => Item.id === product.id);
   if (existingCartItem?.quantity === 1) {
     return items.filter((item) => item.id !== product.id);
@@ -20,9 +23,26 @@ export const removeCartItem = (
     item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item
   );
 };
-export const clearCartItem = (items: ProductItems[], product: ProductItems) => {
+export const clearCartItem = (items: ProductItems[], product: product) => {
   const existingCartItem = items.find((Item) => Item.id === product.id);
   if (existingCartItem) {
     return items.filter((item) => item.id !== product.id);
+  }
+};
+export const CartReducer = (state: ICartState, action: CartAction) => {
+  const { type } = action;
+  switch (type) {
+    case CartActionType.SET_CART_ITEMS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case CartActionType.SET_IS_CART_OPEN:
+      return {
+        ...state,
+        isCartOpen: !state.isCartOpen,
+      };
+    default:
+      return state;
   }
 };

@@ -1,4 +1,4 @@
-import style from "./style/Checkout.module.scss";
+import style from "./Checkout.module.scss";
 import { useCart } from "../../hooks";
 import { Chevron, CHEVRON_TYPE_CLASSES } from "../../component";
 // import style from "./style/CheckoutItem.module.scss";

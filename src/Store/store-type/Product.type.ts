@@ -5,7 +5,7 @@ export type product = {
   price: number;
 };
 export type ProductMap = { [title: string]: product[] };
-export interface IProductContex {
+export interface IProductContext {
   cataGoriesMap: ProductMap;
   fetchCatagories: () => void;
 }

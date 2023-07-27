@@ -1,4 +1,4 @@
-import style from "./style/Shop.module.scss";
+import style from "./Shop.module.scss";
 import { Routes, Route, Link } from "react-router-dom";
 import { Button, BUTTON_TYPE_CLASSES } from "../../component";
 import { useParams } from "react-router-dom";
@@ -41,7 +41,6 @@ const Preview = ({ title, products }) => {
   const previewCategory = products
     .filter((_, idx) => idx < 4)
     .map((product) => <Card key={product.id} items={product} />);
-
   return (
     <div className={style["category-preview-container"]}>
       <Link to={title}>

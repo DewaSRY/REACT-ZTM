@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { ICartContext } from "./Cart.Type";
+import { ICartContext } from "../store-type/Cart.Type";
 
 export const CartContext = createContext<ICartContext>({
   isCartOpen: false,

@@ -6,8 +6,8 @@ import {
   PropsWithChildren,
 } from "react";
 import { getCategoriesAndDocuments } from "../../utils/Firebase.utils";
-import { IProductContex, ProductMap } from "./Product.type";
-export const ProductsContext = createContext<IProductContex>({
+import { IProductContext, ProductMap } from "../store-type/Product.type";
+export const ProductsContext = createContext<IProductContext>({
   cataGoriesMap: {},
   fetchCatagories: () => {},
 });

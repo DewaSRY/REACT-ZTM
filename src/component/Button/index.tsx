@@ -25,7 +25,7 @@ export function Button({ children, buttonType, ...otherProps }: ButtonProps) {
     style[optionButton],
   ].join(" ");
   return (
-    <button className={ButtonClass} {...otherProps}>
+    <button role="button" className={ButtonClass} {...otherProps}>
       {children}
     </button>
   );

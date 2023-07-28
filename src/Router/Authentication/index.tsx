@@ -15,8 +15,7 @@ function SignInForm() {
     email = inputs.email;
     password = inputs.password;
   };
-  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmitForm = () => {
     emailLogin(email, password);
   };
   return (
@@ -58,8 +57,7 @@ function SignUpForm() {
     displayName = inputs.displayName;
     confirmPassword = inputs.confirmPassword;
   };
-  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmitForm = () => {
     if (confirmPassword === password) {
       createUser(displayName, email, password);
     } else {

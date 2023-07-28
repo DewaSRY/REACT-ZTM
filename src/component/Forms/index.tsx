@@ -1,19 +1,13 @@
 import style from "./Forms.module.scss";
 import { Inputs } from "../Inputs";
-import {
-  useState,
-  FormHTMLAttributes,
-  useEffect,
-  useMemo,
-  FormEvent,
-} from "react";
+import { useState, FormHTMLAttributes, useEffect, useMemo } from "react";
 interface Inputs {
   [key: string]: string;
 }
 type IForm = {
   inputs: Inputs;
   inputsUpdate: (arg: Inputs) => void;
-  onSubmitForm: (e: FormEvent<HTMLFormElement>) => void;
+  onSubmitForm: () => void;
   children: React.ReactNode;
 } & FormHTMLAttributes<HTMLFormElement>;
 
@@ -46,7 +40,14 @@ export function Forms({ inputs, inputsUpdate, onSubmitForm, children }: IForm) {
     );
   });
   return (
-    <form className={style.formWrapper} onSubmit={onSubmitForm}>
+    <form
+      role="forms"
+      className={style.formWrapper}
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmitForm();
+      }}
+    >
       {InputsForm}
       <div className={style["buttons-container "]}>{children}</div>
     </form>

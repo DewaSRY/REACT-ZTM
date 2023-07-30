@@ -29,7 +29,6 @@ export const clearCartItem = (items: CartItems[], product: Product) => {
     return items.filter((item) => item.id !== product.id);
   }
 };
-
 export const CartReducer = (state: ICartState, action: CartAction) => {
   const { type } = action;
   switch (type) {

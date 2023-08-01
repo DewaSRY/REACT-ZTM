@@ -1,16 +1,16 @@
 import {
   categoriesReducer,
   CATEGORIES_INITIAL_STATE,
-} from '../category.reducer';
+} from "../Reducers/category.reducer";
 
 import {
   fetchCategoriesStart,
   fetchCategoriesSuccess,
   fetchCategoriesFailed,
-} from '../category.action';
+} from "../Action-Type/category.action";
 
-describe('Category Reducer action tests', () => {
-  test('fetchCategoriesStart', () => {
+describe("Category Reducer action tests", () => {
+  test("fetchCategoriesStart", () => {
     const expectedState = {
       ...CATEGORIES_INITIAL_STATE,
       isLoading: true,
@@ -21,22 +21,22 @@ describe('Category Reducer action tests', () => {
     ).toEqual(expectedState);
   });
 
-  test('fetchCategoriesSuccess', () => {
+  test("fetchCategoriesSuccess", () => {
     const mockData = [
       {
-        title: 'mens',
-        imageUrl: 'test',
+        title: "mens",
+        imageUrl: "test",
         items: [
-          { id: 1, name: 'Product 1' },
-          { id: 2, name: 'Product 2' },
+          { id: 1, name: "Product 1" },
+          { id: 2, name: "Product 2" },
         ],
       },
       {
-        title: 'womens',
-        imageUrl: 'test',
+        title: "womens",
+        imageUrl: "test",
         items: [
-          { id: 3, name: 'Product 3' },
-          { id: 4, name: 'Product 4' },
+          { id: 3, name: "Product 3" },
+          { id: 4, name: "Product 4" },
         ],
       },
     ];
@@ -55,8 +55,8 @@ describe('Category Reducer action tests', () => {
     ).toEqual(expectedState);
   });
 
-  test('fetchCategoriesFailed', () => {
-    const mockError = new Error('Error fetching categories');
+  test("fetchCategoriesFailed", () => {
+    const mockError = new Error("Error fetching categories");
 
     const expectedState = {
       ...CATEGORIES_INITIAL_STATE,

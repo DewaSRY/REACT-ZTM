@@ -1,11 +1,11 @@
-import { CategoryItem } from '../categories/category.types';
-import { CART_ACTION_TYPES, CartItem } from './cart.types';
+import { CategoryItem } from "../types/category.types";
+import { CART_ACTION_TYPES, CartItem } from "../types/cart.types";
 import {
   createAction,
   withMatcher,
   Action,
   ActionWithPayload,
-} from '../../utils/reducer/reducer.utils';
+} from "../../utils/reducer/reducer.utils";
 
 const addCartItem = (
   cartItems: CartItem[],

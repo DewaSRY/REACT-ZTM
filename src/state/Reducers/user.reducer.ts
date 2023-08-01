@@ -1,6 +1,6 @@
-import { AnyAction } from 'redux';
+import { AnyAction } from "redux";
 
-import { USER_ACTION_TYPES } from './user.types';
+import { USER_ACTION_TYPES } from "../types/user.types";
 
 import {
   signInFailed,
@@ -8,9 +8,9 @@ import {
   signOutFailed,
   signOutSuccess,
   signInSuccess,
-} from './user.action';
+} from "../Action-Type/user.action";
 
-import { UserData } from '../../utils/firebase/firebase.utils';
+import { UserData } from "../../utils/firebase/firebase.utils";
 
 export type UserState = {
   readonly currentUser: UserData | null;

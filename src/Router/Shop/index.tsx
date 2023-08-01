@@ -1,16 +1,15 @@
 import style from "./Shop.module.scss";
 import { Routes, Route, Link } from "react-router-dom";
-import { Button, BUTTON_TYPE_CLASSES } from "../../component";
+import { Button, BUTTON_TYPE_CLASSES, Spinner } from "../../component";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useProducts } from "../../hooks";
-import { Product } from "../../Store";
-import { useCart } from "../../hooks";
+import { useProducts, useCart } from "../../hooks";
+import { CategoryItem } from "../../state";
 
-const Card = ({ items }: { items: Product }) => {
-  const { addItems } = useCart();
+const Card = ({ items }: { items: CategoryItem }) => {
+  const { addItem } = useCart();
   const { imageUrl, price, name } = items;
-  const handleClick = () => addItems(items);
+  const handleClick = () => addItem(items);
   return (
     <div className={style["product-card-container"]}>
       <img src={imageUrl} alt={name} />
@@ -26,13 +25,17 @@ const Card = ({ items }: { items: Product }) => {
 };
 
 const Previews = () => {
-  const { cataGoriesMap } = useProducts();
+  const { cataGoriesMap, isLoading } = useProducts();
   return (
     <>
-      {Object.keys(cataGoriesMap).map((key) => {
-        const products = cataGoriesMap[key];
-        return <Preview key={key} title={key} products={products} />;
-      })}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        Object.keys(cataGoriesMap).map((key) => {
+          const products = cataGoriesMap[key];
+          return <Preview key={key} title={key} products={products} />;
+        })
+      )}
     </>
   );
 };
@@ -41,7 +44,7 @@ const Preview = ({
   products,
 }: {
   title: string;
-  products: Product[];
+  products: CategoryItem[];
 }) => {
   const previewCategory = products
     .filter((_, idx) => idx < 4)
@@ -76,6 +79,11 @@ const CategoryProducts = () => {
   );
 };
 export function Shope() {
+  const { fetchCategoriesStartAsync } = useProducts();
+  useEffect(() => {
+    fetchCategoriesStartAsync();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Routes>
       <Route index element={<Previews />} />

@@ -33,13 +33,13 @@ const CartItem = ({ cartItem }: { cartItem: CartItems }) => {
   );
 };
 const CartIcon = () => {
-  const { cartCount, setIsCartOpen } = useCart();
+  const { cartCount, openCart } = useCart();
   const navigate = useNavigate();
   function CartHalle() {
     if (!cartCount) {
       return navigate("/checkout");
     }
-    setIsCartOpen();
+    openCart();
   }
   return (
     <div className={style["cart-icon-container"]} onClick={CartHalle}>
@@ -50,11 +50,11 @@ const CartIcon = () => {
 };
 
 const CartDropDown = () => {
-  const { cartItems, setIsCartOpen } = useCart();
+  const { cartItems, openCart } = useCart();
   const navigate = useNavigate();
   const goToCheckoutHandler = () => {
     navigate("/checkout");
-    setIsCartOpen();
+    openCart();
   };
   const CartDropdownItems = cartItems.map((item) => (
     <CartItem key={item.id} cartItem={item} />

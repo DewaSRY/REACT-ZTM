@@ -1,6 +1,6 @@
 import style from "./Shop.module.scss";
 import { Routes, Route, Link } from "react-router-dom";
-import { Button, BUTTON_TYPE_CLASSES } from "../../component";
+import { Button, BUTTON_TYPE_CLASSES, Spinner } from "../../component";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useProducts, useCart } from "../../hooks";
@@ -25,13 +25,17 @@ const Card = ({ items }: { items: CategoryItem }) => {
 };
 
 const Previews = () => {
-  const { cataGoriesMap } = useProducts();
+  const { cataGoriesMap, isLoading } = useProducts();
   return (
     <>
-      {Object.keys(cataGoriesMap).map((key) => {
-        const products = cataGoriesMap[key];
-        return <Preview key={key} title={key} products={products} />;
-      })}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        Object.keys(cataGoriesMap).map((key) => {
+          const products = cataGoriesMap[key];
+          return <Preview key={key} title={key} products={products} />;
+        })
+      )}
     </>
   );
 };

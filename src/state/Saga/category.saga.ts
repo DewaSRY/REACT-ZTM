@@ -1,4 +1,4 @@
-import { takeLatest, call, put, all } from "typed-redux-saga/macro";
+import { takeLatest, call, put, all } from "typed-redux-saga";
 
 import { getCategoriesAndDocuments } from "../../utils";
 import {

@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { RootState } from "..";
+import { RootState } from "../index";
 
 import { UserState } from "../Reducers/user.reducer";
 

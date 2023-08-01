@@ -23,7 +23,7 @@ import {
   QueryDocumentSnapshot,
 } from "firebase/firestore";
 
-import { ProductMap } from "../Store";
+import { Category } from "../state";
 // import { Category } from '../../store/categories/category.types';
 const firebaseConfig = {
   apiKey: "AIzaSyCIiQNscpjM2Ii5rmzk98i9MhqT79H2Zzo",
@@ -33,7 +33,15 @@ const firebaseConfig = {
   messagingSenderId: "383517192896",
   appId: "1:383517192896:web:757c82a31522563af53325",
 };
+// export type AdditionalInformation = {
+//   displayName?: string;
+// };
 
+// export type UserData = {
+//   createdAt: Date;
+//   displayName: string;
+//   email: string;
+// };
 export const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
@@ -69,18 +77,26 @@ export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
   await batch.commit();
   console.log("done");
 };
-
-export const getCategoriesAndDocuments = async (): Promise<ProductMap> => {
-  const collectionRef = collection(db, "Catagories");
+export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
+  const collectionRef = collection(db, "categories");
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.reduce((products, item) => {
-    const { title, items } = item.data();
-    products[title.toLowerCase()] = items;
-    return products;
-  }, {} as ProductMap);
+  return querySnapshot.docs.map(
+    (docSnapshot) => docSnapshot.data() as Category
+  );
 };
+// export const getCategoriesAndDocuments = async (): Promise<ProductMap> => {
+//   const collectionRef = collection(db, "Catagories");
+//   const q = query(collectionRef);
+
+//   const querySnapshot = await getDocs(q);
+//   return querySnapshot.docs.reduce((products, item) => {
+//     const { title, items } = item.data();
+//     products[title.toLowerCase()] = items;
+//     return products;
+//   }, {} as ProductMap);
+// };
 
 export type AdditionalInformation = {
   displayName?: string;

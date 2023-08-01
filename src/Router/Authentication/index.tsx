@@ -8,7 +8,7 @@ const signForm = {
   password: "",
 };
 function SignInForm() {
-  const { googleLogin, emailLogin } = useUser();
+  const { signInWithGoogle, signInStartWitheEmail } = useUser();
   let email: string;
   let password: string;
   const handleInputs = (inputs: typeof signForm) => {
@@ -16,7 +16,7 @@ function SignInForm() {
     password = inputs.password;
   };
   const handleSubmitForm = () => {
-    emailLogin(email, password);
+    signInStartWitheEmail(email, password);
   };
   return (
     <div className={style.formWrapper}>
@@ -31,7 +31,7 @@ function SignInForm() {
         <Button
           type="button"
           buttonType={BUTTON_TYPE_CLASSES.GOOGLE}
-          onClick={() => googleLogin()}
+          onClick={() => signInWithGoogle()}
         >
           Sign in with google
         </Button>
@@ -46,7 +46,7 @@ const signUpForm = {
   confirmPassword: "",
 };
 function SignUpForm() {
-  const { createUser } = useUser();
+  const { createSingUpStart } = useUser();
   let email: string;
   let password: string;
   let displayName: string;
@@ -59,7 +59,7 @@ function SignUpForm() {
   };
   const handleSubmitForm = () => {
     if (confirmPassword === password) {
-      createUser(displayName, email, password);
+      createSingUpStart(displayName, email, password);
     } else {
       alert(`password doesn't match withe the confirmation`);
     }

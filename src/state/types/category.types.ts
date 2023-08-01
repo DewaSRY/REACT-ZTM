@@ -20,3 +20,20 @@ export type Category = {
 export type CategoryMap = {
   [key: string]: CategoryItem[];
 };
+
+export type FetchCategoriesStart = {
+  type: CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START;
+};
+export type FetchCategoriesSuccess = {
+  type: CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS;
+  payload: Category[];
+};
+
+export type FetchCategoriesFailed = {
+  type: CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED;
+  payload: Error;
+};
+export type CatagoriesActionType =
+  | FetchCategoriesStart
+  | FetchCategoriesSuccess
+  | FetchCategoriesFailed;

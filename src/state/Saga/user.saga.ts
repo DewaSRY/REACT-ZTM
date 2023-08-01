@@ -1,7 +1,11 @@
 import { takeLatest, put, all, call } from "typed-redux-saga";
 import { User } from "firebase/auth";
-// import {takeLatest,put,all,call} from "redux-saga/effects"
-import { USER_ACTION_TYPES } from "../types/user.types";
+import {
+  USER_ACTION_TYPES,
+  EmailSignInStart,
+  SignUpStart,
+  SignUpSuccess,
+} from "../types/user.types";
 
 import {
   signInSuccess,
@@ -10,9 +14,6 @@ import {
   signUpFailed,
   signOutSuccess,
   signOutFailed,
-  EmailSignInStart,
-  SignUpStart,
-  SignUpSuccess,
 } from "../Action-Type/user.action";
 
 import {

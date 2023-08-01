@@ -1,3 +1,3 @@
-export * from "./category.action";
-export * from "./cart.action";
-export * from "./user.action";
+export * as CategoryAction from "./category.action";
+export * as CartAction from "./cart.action";
+export * as UserAction from "./user.action";

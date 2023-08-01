@@ -1,5 +1,8 @@
-import { CartActionType } from "../Action-Type/cart.action";
-import { CartItem, CART_ACTION_TYPES } from "../types/cart.types";
+import {
+  CartItem,
+  CART_ACTION_TYPES,
+  CartActionType,
+} from "../types/cart.types";
 export type CartState = {
   readonly isCartOpen: boolean;
   readonly cartItems: CartItem[];
@@ -21,7 +24,7 @@ export const cartReducer = (
     case CART_ACTION_TYPES.SET_IS_CART_OPEN:
       return {
         ...state,
-        isCartOpen: action.payload,
+        isCartOpen: !state.isCartOpen,
       };
     default:
       return state;

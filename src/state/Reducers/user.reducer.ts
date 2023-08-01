@@ -1,5 +1,4 @@
-import { USER_ACTION_TYPES } from "../types/user.types";
-import { UserActionType } from "../Action-Type/user.action";
+import { USER_ACTION_TYPES, UserActionType } from "../types/user.types";
 import { UserData } from "../../utils";
 export type UserState = {
   readonly currentUser: UserData | null;

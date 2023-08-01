@@ -1,21 +1,10 @@
-import { CATEGORIES_ACTION_TYPES, Category } from "../types/category.types";
-
-export type FetchCategoriesStart = {
-  type: CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START;
-};
-export type FetchCategoriesSuccess = {
-  type: CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS;
-  payload: Category[];
-};
-
-export type FetchCategoriesFailed = {
-  type: CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED;
-  payload: Error;
-};
-export type CatagoriesActionType =
-  | FetchCategoriesStart
-  | FetchCategoriesSuccess
-  | FetchCategoriesFailed;
+import {
+  CATEGORIES_ACTION_TYPES,
+  Category,
+  FetchCategoriesStart,
+  FetchCategoriesSuccess,
+  FetchCategoriesFailed,
+} from "../types/category.types";
 
 export const fetchCategoriesStart = (): FetchCategoriesStart => {
   return {

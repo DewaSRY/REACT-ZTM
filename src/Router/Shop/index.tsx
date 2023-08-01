@@ -3,14 +3,13 @@ import { Routes, Route, Link } from "react-router-dom";
 import { Button, BUTTON_TYPE_CLASSES } from "../../component";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useProducts } from "../../hooks";
-import { Product } from "../../Store";
-import { useCart } from "../../hooks";
+import { useProducts, useCart } from "../../hooks";
+import { CategoryItem } from "../../state";
 
-const Card = ({ items }: { items: Product }) => {
-  const { addItems } = useCart();
+const Card = ({ items }: { items: CategoryItem }) => {
+  const { addItem } = useCart();
   const { imageUrl, price, name } = items;
-  const handleClick = () => addItems(items);
+  const handleClick = () => addItem(items);
   return (
     <div className={style["product-card-container"]}>
       <img src={imageUrl} alt={name} />
@@ -41,7 +40,7 @@ const Preview = ({
   products,
 }: {
   title: string;
-  products: Product[];
+  products: CategoryItem[];
 }) => {
   const previewCategory = products
     .filter((_, idx) => idx < 4)
@@ -76,6 +75,11 @@ const CategoryProducts = () => {
   );
 };
 export function Shope() {
+  const { fetchCategoriesStartAsync } = useProducts();
+  useEffect(() => {
+    fetchCategoriesStartAsync();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Routes>
       <Route index element={<Previews />} />

@@ -2,10 +2,10 @@ import style from "./Checkout.module.scss";
 import { useCart } from "../../hooks";
 import { Chevron, CHEVRON_TYPE_CLASSES } from "../../component";
 // import style from "./style/CheckoutItem.module.scss";
-
-const CheckoutItem = ({ cartItem }) => {
+import { CartItem } from "../../state";
+const CheckoutItem = ({ cartItem }: { cartItem: CartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
-  const { addItems, removeItems, clearItems } = useCart();
+  const { addItem, removeItem, clearItem } = useCart();
   return (
     <div className={style["checkout-item-container"]}>
       <div className={style["image-container"]}>
@@ -15,18 +15,18 @@ const CheckoutItem = ({ cartItem }) => {
       <span className={style.quantity}>
         <Chevron
           chevron={CHEVRON_TYPE_CLASSES.LEFT}
-          onClick={() => removeItems(cartItem)}
+          onClick={() => removeItem(cartItem)}
         />
         <span className={style.value}>{quantity}</span>
         <Chevron
           chevron={CHEVRON_TYPE_CLASSES.RIGHT}
-          onClick={() => addItems(cartItem)}
+          onClick={() => addItem(cartItem)}
         />
       </span>
       <span className={style.price}> {price}</span>
       <Chevron
         chevron={CHEVRON_TYPE_CLASSES.CROSS}
-        onClick={() => clearItems(cartItem)}
+        onClick={() => clearItem(cartItem)}
       />
     </div>
   );

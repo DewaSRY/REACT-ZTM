@@ -1,7 +1,10 @@
 // import { AnyAction,  } from "redux";
 
-import { Category, CATEGORIES_ACTION_TYPES } from "../types/category.types";
-import { CatagoriesActionType } from "../Action-Type";
+import {
+  Category,
+  CATEGORIES_ACTION_TYPES,
+  CatagoriesActionType,
+} from "../types/category.types";
 
 export type CategoriesState = {
   readonly categories: Category[];

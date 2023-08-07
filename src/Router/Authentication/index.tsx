@@ -1,13 +1,18 @@
-// import { SignIn } from "./SignIn";
 import style from "./Authentication.module.scss";
-import { BUTTON_TYPE_CLASSES, Button, Forms } from "../../component";
+import { Button, Forms } from "../../component";
 import { useUser } from "../../hooks";
-
+import { FC } from "react";
 const signForm = {
   email: "",
   password: "",
 };
-function SignInForm() {
+const signUpForm = {
+  displayName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+const SignInForm: FC = () => {
   const { signInWithGoogle, signInStartWitheEmail } = useUser();
   let email: string;
   let password: string;
@@ -15,9 +20,8 @@ function SignInForm() {
     email = inputs.email;
     password = inputs.password;
   };
-  const handleSubmitForm = () => {
-    signInStartWitheEmail(email, password);
-  };
+  const handleSubmitForm = () => signInStartWitheEmail(email, password);
+
   return (
     <div className={style.formWrapper}>
       <h2>Log In Here</h2>
@@ -30,7 +34,7 @@ function SignInForm() {
         <Button type="submit">SIGN IN </Button>
         <Button
           type="button"
-          buttonType={BUTTON_TYPE_CLASSES.GOOGLE}
+          buttonType="google-sign-in"
           onClick={() => signInWithGoogle()}
         >
           Sign in with google
@@ -38,14 +42,9 @@ function SignInForm() {
       </Forms>
     </div>
   );
-}
-const signUpForm = {
-  displayName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
 };
-function SignUpForm() {
+
+const SignUpForm: FC = () => {
   const { createSingUpStart } = useUser();
   let email: string;
   let password: string;
@@ -77,13 +76,13 @@ function SignUpForm() {
       </Forms>
     </div>
   );
-}
+};
 
-export function Authentication() {
+export const Authentication: FC = () => {
   return (
     <div className={style["authentication-container"]}>
       <SignInForm />
       <SignUpForm />
     </div>
   );
-}
+};

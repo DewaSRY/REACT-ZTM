@@ -1,6 +1,6 @@
 import style from "./Forms.module.scss";
 import { Inputs } from "../Inputs";
-import { useState, FormHTMLAttributes, useEffect, useMemo } from "react";
+import { useState, FormHTMLAttributes, useEffect, useMemo, FC } from "react";
 interface Inputs {
   [key: string]: string;
 }
@@ -11,7 +11,12 @@ type IForm = {
   children: React.ReactNode;
 } & FormHTMLAttributes<HTMLFormElement>;
 
-export function Forms({ inputs, inputsUpdate, onSubmitForm, children }: IForm) {
+export const Forms: FC<IForm> = ({
+  inputs,
+  inputsUpdate,
+  onSubmitForm,
+  children,
+}) => {
   const [formField, setFormField] = useState(inputs);
   const handelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -52,4 +57,4 @@ export function Forms({ inputs, inputsUpdate, onSubmitForm, children }: IForm) {
       <div className={style["buttons-container "]}>{children}</div>
     </form>
   );
-}
+};

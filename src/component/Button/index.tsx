@@ -1,32 +1,22 @@
 import style from "./Button.module.scss";
-import { ButtonHTMLAttributes } from "react";
-
-// eslint-disable-next-line react-refresh/only-export-components
-export enum BUTTON_TYPE_CLASSES {
-  BASE = "BASE",
-  GOOGLE = "google-sign-in",
-  INVERTED = "inverted",
-}
-
-type ButtonTypes =
-  | BUTTON_TYPE_CLASSES.BASE
-  | BUTTON_TYPE_CLASSES.GOOGLE
-  | BUTTON_TYPE_CLASSES.INVERTED;
+import { ButtonHTMLAttributes, FC } from "react";
 
 type ButtonProps = {
-  children: React.ReactNode;
-  buttonType?: ButtonTypes;
+  buttonType?: "BASE" | "google-sign-in" | "inverted";
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export function Button({ children, buttonType, ...otherProps }: ButtonProps) {
-  const optionButton: ButtonTypes = buttonType;
+export const Button: FC<ButtonProps> = ({
+  children,
+  buttonType,
+  ...otherProps
+}) => {
   const ButtonClass: string = [
     style["button-container"],
-    style[optionButton],
+    style[buttonType],
   ].join(" ");
   return (
     <button role="button" className={ButtonClass} {...otherProps}>
       {children}
     </button>
   );
-}
+};

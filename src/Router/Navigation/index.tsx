@@ -1,11 +1,19 @@
 import style from "./Navigation.module.scss";
-import { useNavigate } from "react-router-dom";
 import { Crwn, ShoppingBags } from "../../Assets";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { signOutUser } from "../../utils/Firebase.utils";
 import { useUser, useCart } from "../../hooks";
 import { Button } from "../../component";
-import { CartItems } from "../../Store";
+import { FC } from "react";
+interface CartItemProps {
+  cartItem: {
+    id: number;
+    imageUrl: string;
+    name: string;
+    price: number;
+    quantity: number;
+  };
+}
 
 const SignInLink = () => (
   <Link className={style["nav-link"]} to="Authentication">
@@ -18,7 +26,7 @@ const SignOutLink = () => (
     SIGN OUT
   </span>
 );
-const CartItem = ({ cartItem }: { cartItem: CartItems }) => {
+const CartItem: FC<CartItemProps> = ({ cartItem }) => {
   const { name, quantity, imageUrl, price } = cartItem;
   return (
     <div className={style["cart-item-container"]}>
@@ -32,7 +40,7 @@ const CartItem = ({ cartItem }: { cartItem: CartItems }) => {
     </div>
   );
 };
-const CartIcon = () => {
+const CartIcon: FC = () => {
   const { cartCount, openCart } = useCart();
   const navigate = useNavigate();
   function CartHalle() {
@@ -49,7 +57,7 @@ const CartIcon = () => {
   );
 };
 
-const CartDropDown = () => {
+const CartDropDown: FC = () => {
   const { cartItems, openCart } = useCart();
   const navigate = useNavigate();
   const goToCheckoutHandler = () => {
@@ -66,7 +74,7 @@ const CartDropDown = () => {
     </div>
   );
 };
-export function Navigation() {
+export const Navigation: FC = () => {
   const { currentUser } = useUser();
   const { isCartOpen } = useCart();
   return (
@@ -87,4 +95,4 @@ export function Navigation() {
       <Outlet />
     </>
   );
-}
+};

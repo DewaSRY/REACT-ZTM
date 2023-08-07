@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { expect, it } from "vitest";
 import { render } from "@testing-library/react";
-import { Button, BUTTON_TYPE_CLASSES } from "./index";
+import { Button } from "./index";
 
 describe("button tests", () => {
   let suit: HTMLElement;
@@ -20,7 +19,7 @@ describe("button tests", () => {
   describe("google button class ", () => {
     it("button have google class  ", () => {
       suit = render(
-        <Button buttonType={BUTTON_TYPE_CLASSES.GOOGLE}>button</Button>
+        <Button buttonType="google-sign-in">button</Button>
       ).container;
       const actual = suit.querySelector(".google-sign-in");
       expect(actual).toBeInTheDocument();
@@ -28,9 +27,7 @@ describe("button tests", () => {
   });
   describe("inverted button class ", () => {
     it("button have inverted class ", () => {
-      suit = render(
-        <Button buttonType={BUTTON_TYPE_CLASSES.INVERTED}>button</Button>
-      ).container;
+      suit = render(<Button buttonType="inverted">button</Button>).container;
       const actual = suit.querySelector(".inverted");
       expect(actual).toBeInTheDocument();
     });

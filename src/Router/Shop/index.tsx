@@ -1,12 +1,11 @@
 import style from "./Shop.module.scss";
-import { Routes, Route, Link } from "react-router-dom";
-import { Button, BUTTON_TYPE_CLASSES, Spinner } from "../../component";
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Routes, Route, Link, useParams } from "react-router-dom";
+import { Button, Spinner } from "../../component";
+import { useState, useEffect, FC } from "react";
 import { useProducts, useCart } from "../../hooks";
 import { CategoryItem } from "../../state";
 
-const Card = ({ items }: { items: CategoryItem }) => {
+const Card: FC<{ items: CategoryItem }> = ({ items }) => {
   const { addItem } = useCart();
   const { imageUrl, price, name } = items;
   const handleClick = () => addItem(items);
@@ -17,14 +16,14 @@ const Card = ({ items }: { items: CategoryItem }) => {
         <span className={style.name}>{name}</span>
         <span className={style.price}>{price}</span>
       </div>
-      <Button buttonType={BUTTON_TYPE_CLASSES.INVERTED} onClick={handleClick}>
+      <Button buttonType="inverted" onClick={handleClick}>
         Add Item
       </Button>
     </div>
   );
 };
 
-const Previews = () => {
+const Previews: FC = () => {
   const { cataGoriesMap, isLoading } = useProducts();
   return (
     <>
@@ -39,13 +38,10 @@ const Previews = () => {
     </>
   );
 };
-const Preview = ({
-  title,
-  products,
-}: {
+const Preview: FC<{
   title: string;
   products: CategoryItem[];
-}) => {
+}> = ({ title, products }) => {
   const previewCategory = products
     .filter((_, idx) => idx < 4)
     .map((product) => <Card key={product.id} items={product} />);
@@ -59,7 +55,7 @@ const Preview = ({
   );
 };
 
-const CategoryProducts = () => {
+const CategoryProducts: FC = () => {
   const { category } = useParams();
   const { cataGoriesMap } = useProducts();
   const [products, setProducts] = useState(cataGoriesMap[category]);
@@ -82,8 +78,7 @@ export function Shope() {
   const { fetchCategoriesStartAsync } = useProducts();
   useEffect(() => {
     fetchCategoriesStartAsync();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchCategoriesStartAsync]);
   return (
     <Routes>
       <Route index element={<Previews />} />

@@ -3,12 +3,8 @@ import { persistStore, persistReducer, PersistConfig } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
-
 import { rootSaga } from "./Saga";
-
 import { rootReducer } from "./Reducers";
-
-export type RootState = ReturnType<typeof rootReducer>;
 
 declare global {
   interface Window {
@@ -52,6 +48,8 @@ export const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 export const persister = persistStore(store);
+export type RootState = ReturnType<typeof rootReducer>;
+// export type DispatchState=RootState['']
 export * from "./types";
 export * from "./Action-Type";
 export * from "./Selector";

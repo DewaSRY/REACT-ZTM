@@ -23,11 +23,14 @@ const CheckoutItem: FC<{ cartItem: CartItem }> = ({ cartItem }) => {
   );
 };
 const HeadTable = ["Product", "Description", "Quantity", "Price", "Remove"];
+
+
 export const Checkout: FC = () => {
   const { cartTotal, cartItems } = useCart();
   const CheckOutItems = cartItems.map((item) => (
     <CheckoutItem key={item.id} cartItem={item} />
   ));
+
   const headTable = HeadTable.map((block, id) => (
     <div key={id} className={style["header-block"]}>
       <span>{block}</span>

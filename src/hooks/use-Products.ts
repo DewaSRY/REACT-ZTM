@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useMemo } from "react";
 import { bindActionCreators } from "redux";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import {
@@ -12,17 +12,13 @@ export function useProducts() {
   const cataGoriesMap = typeSelector(selectCategoriesMap);
   const isLoading = typeSelector(selectCategoriesIsLoading);
   const dispatch = useDispatch();
-  const { fetchCategoriesStart } = bindActionCreators(CategoryAction, dispatch);
-  const fetchCategoriesStartAsync = useCallback(() => {
-    fetchCategoriesStart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const { fetchCategoriesStart } = useMemo(
+    () => bindActionCreators(CategoryAction, dispatch),
+    [dispatch]
+  );
   return {
     cataGoriesMap,
     isLoading,
-    fetchCategoriesStartAsync,
-    // testStart,
-    // fetchCategoriesStartAsync,
+    fetchCategoriesStart,
   };
 }

@@ -43,7 +43,6 @@ const clearCartItem = (
   cartItemToClear: CartItem
 ): CartItem[] =>
   cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
-
 export const addItemToCart = (
   cartItems: CartItem[],
   productToAdd: CategoryItem | CartItem

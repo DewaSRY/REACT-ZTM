@@ -21,6 +21,7 @@ export const checkUserSession = (): CheckUserSession => {
     type: USER_ACTION_TYPES.CHECK_USER_SESSION,
   };
 };
+
 export const setCurrentUser = (user: UserData): SetCurrentUser => {
   return {
     type: USER_ACTION_TYPES.SET_CURRENT_USER,
@@ -45,7 +46,6 @@ export const emailSignInStart = (
     },
   };
 };
-
 export const signInSuccess = (
   user: UserData & { id: string }
 ): SignInSuccess => {
@@ -54,14 +54,12 @@ export const signInSuccess = (
     payload: user,
   };
 };
-
 export const signInFailed = (error: Error): SignInFailed => {
   return {
     type: USER_ACTION_TYPES.SIGN_IN_FAILED,
     payload: error,
   };
 };
-
 export const signUpStart = (
   email: string,
   password: string,
@@ -76,7 +74,6 @@ export const signUpStart = (
     },
   };
 };
-
 export const signUpSuccess = (
   user: User,
   additionalDetails: AdditionalInformation
@@ -89,26 +86,22 @@ export const signUpSuccess = (
     },
   };
 };
-
 export const signUpFailed = (error: Error): SignUpFailed => {
   return {
     type: USER_ACTION_TYPES.SIGN_UP_FAILED,
     payload: error,
   };
 };
-
 export const signOutStart = (): SignOutStart => {
   return {
     type: USER_ACTION_TYPES.SIGN_OUT_START,
   };
 };
-
 export const signOutSuccess = (): SignOutSuccess => {
   return {
     type: USER_ACTION_TYPES.SIGN_OUT_SUCCESS,
   };
 };
-
 export const signOutFailed = (error: Error): SignOutFailed => {
   return {
     type: USER_ACTION_TYPES.SIGN_OUT_FAILED,

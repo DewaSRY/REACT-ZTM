@@ -75,8 +75,8 @@ const CartDropDown: FC = () => {
   );
 };
 export const Navigation: FC = () => {
-  const { currentUser } = useUser();
-  const { isCartOpen } = useCart();
+  // const { currentUser } = useUser();
+  // const { isCartOpen } = useCart();
   return (
     <>
       <div className={style["navigation"]}>
@@ -87,10 +87,10 @@ export const Navigation: FC = () => {
           <Link className={style["nav-link"]} to="shop">
             Shop
           </Link>
-          {currentUser ? <SignOutLink /> : <SignInLink />}
+          {/* {   ? <SignOutLink /> : <SignInLink />} */}
           <CartIcon />
         </div>
-        {isCartOpen && <CartDropDown />}
+        {/* {isCartOpen && <CartDropDown />} */}
       </div>
       <Outlet />
     </>

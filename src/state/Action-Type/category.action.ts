@@ -5,7 +5,6 @@ import {
   FetchCategoriesSuccess,
   FetchCategoriesFailed,
 } from "../types/category.types";
-
 export const fetchCategoriesStart = (): FetchCategoriesStart => {
   return {
     type: CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START,

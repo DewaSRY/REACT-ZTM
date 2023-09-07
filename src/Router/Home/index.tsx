@@ -1,6 +1,8 @@
 import style from "./HomeDirectory.module.scss";
 import { CATAGORIES } from "../../Assets/CATAGORIES";
 import { Link } from "react-router-dom";
+import { useDispatchAction } from "../../Feature/store";
+import { useEffect } from "react";
 const CategoryPage = ({ items }) => {
   const { imageUrl, title } = items;
   return (
@@ -21,6 +23,10 @@ const CategoryPage = ({ items }) => {
   );
 };
 export function HomeDirectory() {
+  const { fetchCatagoriesStart } = useDispatchAction();
+  useEffect(() => {
+    fetchCatagoriesStart();
+  }, [fetchCatagoriesStart]);
   const homePage = CATAGORIES.map((category, id) => (
     <CategoryPage key={id} items={category} />
   ));

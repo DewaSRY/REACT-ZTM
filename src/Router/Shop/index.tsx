@@ -75,10 +75,11 @@ const CategoryProducts: FC = () => {
   );
 };
 export function Shope() {
-  const { fetchCategoriesStartAsync } = useProducts();
+  const { fetchCategoriesStart } = useProducts();
+  // const { fetchCategoriesAsync } = useDispatchAction();
   useEffect(() => {
-    fetchCategoriesStartAsync();
-  }, [fetchCategoriesStartAsync]);
+    fetchCategoriesStart();
+  }, [fetchCategoriesStart]);
   return (
     <Routes>
       <Route index element={<Previews />} />

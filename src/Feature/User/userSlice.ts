@@ -7,7 +7,6 @@ const userSlice = createSlice({
   name,
   initialState: {
     currentUser: null as null | UserData,
-    isLoading: false,
     error: null as null | Error,
   },
   reducers: {
@@ -25,19 +24,7 @@ const userSlice = createSlice({
   //   builder.addCase(checkUserSession, (state) => state);
   // },
 });
-export enum userActionType {
-  checkUserSession = `users/checkUserSession`,
-  googleSignInStart = `users/googleSignInStart`,
-  emailSignInStart = `users/emailSignInStart`,
-  signInSuccess = `users/signInSuccess`,
-  signInFailed = `users/signInFailed`,
-  signUpStart = `users/signUpStart`,
-  signUpSuccess = `users/signUpSuccess`,
-  signUpFailed = `users/signUpFailed`,
-  signOutStart = `users/signOutStart`,
-  signOutSuccess = `users/signOutSuccess`,
-  signOutFailed = `users/signOutFailed`,
-}
+
 const checkUserSession = createAction(`users/checkUserSession`);
 const setCurrentUser = createAction(
   `users/setCurrentUser`,

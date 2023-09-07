@@ -1,6 +1,6 @@
 import style from "./Authentication.module.scss";
-import { Button, Forms } from "../../component";
-import { useUser } from "../../hooks";
+import { Button, Forms } from "../component";
+import { useDispatchAction } from "../Feature/store";
 import { FC } from "react";
 const signForm = {
   email: "",
@@ -13,14 +13,14 @@ const signUpForm = {
   confirmPassword: "",
 };
 const SignInForm: FC = () => {
-  const { signInWithGoogle, signInStartWitheEmail } = useUser();
+  const { googleSignInStart, emailSignInStart } = useDispatchAction();
   let email: string;
   let password: string;
   const handleInputs = (inputs: typeof signForm) => {
     email = inputs.email;
     password = inputs.password;
   };
-  const handleSubmitForm = () => signInStartWitheEmail(email, password);
+  const handleSubmitForm = () => emailSignInStart(email, password);
 
   return (
     <div className={style.formWrapper}>
@@ -35,7 +35,7 @@ const SignInForm: FC = () => {
         <Button
           type="button"
           buttonType="google-sign-in"
-          onClick={() => signInWithGoogle()}
+          onClick={() => googleSignInStart()}
         >
           Sign in with google
         </Button>
@@ -45,7 +45,7 @@ const SignInForm: FC = () => {
 };
 
 const SignUpForm: FC = () => {
-  const { createSingUpStart } = useUser();
+  const { signUpStart } = useDispatchAction();
   let email: string;
   let password: string;
   let displayName: string;
@@ -58,7 +58,7 @@ const SignUpForm: FC = () => {
   };
   const handleSubmitForm = () => {
     if (confirmPassword === password) {
-      createSingUpStart(displayName, email, password);
+      signUpStart(displayName, email, password);
     } else {
       alert(`password doesn't match withe the confirmation`);
     }

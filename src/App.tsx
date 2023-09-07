@@ -1,11 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import {
-  HomeDirectory,
-  Shope,
-  Checkout,
-  Navigation,
-  Authentication,
-} from "./Router/";
+import { Shope } from "./Router/Shop";
+import { HomeDirectory } from "./Router/Home";
+import { Checkout } from "./Router/Checkout";
+import { Navigation } from "./Router/Navigation";
+import { Authentication } from "./Router/Authentication";
+
 function App() {
   return (
     <Routes>

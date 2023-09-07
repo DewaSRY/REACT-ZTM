@@ -14,7 +14,7 @@ const catagoriesSlice = createSlice({
       state.isLoading = true;
     },
     fetchCatagoriesSuccess(state, action: PayloadAction<Categories[]>) {
-      state.categories.concat(action.payload);
+      state.categories = action.payload;
       state.isLoading = false;
     },
     fetchCatagoriesFailed(state, action: PayloadAction<Error>) {

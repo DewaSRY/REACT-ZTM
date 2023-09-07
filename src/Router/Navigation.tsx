@@ -1,9 +1,8 @@
 import style from "./Navigation.module.scss";
-import { Crwn, ShoppingBags } from "../../Assets";
+import { Crwn, ShoppingBags } from "../Assets";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { signOutUser } from "../../utils/Firebase.utils";
-import { useUser, useCart } from "../../hooks";
-import { Button } from "../../component";
+import { useDispatchAction, useSelectors } from "../Feature/store";
+import { Button } from "../component";
 import { FC } from "react";
 interface CartItemProps {
   cartItem: {
@@ -21,8 +20,8 @@ const SignInLink = () => (
   </Link>
 );
 
-const SignOutLink = () => (
-  <span className={style["nav-link"]} onClick={signOutUser}>
+const SignOutLink = ({ onCLick }: { onCLick: () => void }) => (
+  <span className={style["nav-link"]} onClick={onCLick}>
     SIGN OUT
   </span>
 );
@@ -41,13 +40,18 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
   );
 };
 const CartIcon: FC = () => {
-  const { cartCount, openCart } = useCart();
+  const { cartItems } = useSelectors((s) => s.cart);
+  const { setCartOpen } = useDispatchAction();
+  const cartCount = cartItems.reduce(
+    (total, cartItem) => total + cartItem.quantity,
+    0
+  );
   const navigate = useNavigate();
   function CartHalle() {
     if (!cartCount) {
       return navigate("/checkout");
     }
-    openCart();
+    setCartOpen();
   }
   return (
     <div className={style["cart-icon-container"]} onClick={CartHalle}>
@@ -58,11 +62,12 @@ const CartIcon: FC = () => {
 };
 
 const CartDropDown: FC = () => {
-  const { cartItems, openCart } = useCart();
+  const { cartItems } = useSelectors((s) => s.cart);
+  const { setCartOpen } = useDispatchAction();
   const navigate = useNavigate();
   const goToCheckoutHandler = () => {
     navigate("/checkout");
-    openCart();
+    setCartOpen();
   };
   const CartDropdownItems = cartItems.map((item) => (
     <CartItem key={item.id} cartItem={item} />
@@ -75,8 +80,9 @@ const CartDropDown: FC = () => {
   );
 };
 export const Navigation: FC = () => {
-  // const { currentUser } = useUser();
-  // const { isCartOpen } = useCart();
+  const { currentUser } = useSelectors((s) => s.users);
+  const { isCartOpen } = useSelectors((s) => s.cart);
+  const { signOutStart } = useDispatchAction();
   return (
     <>
       <div className={style["navigation"]}>
@@ -87,10 +93,14 @@ export const Navigation: FC = () => {
           <Link className={style["nav-link"]} to="shop">
             Shop
           </Link>
-          {/* {   ? <SignOutLink /> : <SignInLink />} */}
+          {currentUser ? (
+            <SignOutLink onCLick={signOutStart} />
+          ) : (
+            <SignInLink />
+          )}
           <CartIcon />
         </div>
-        {/* {isCartOpen && <CartDropDown />} */}
+        {isCartOpen && <CartDropDown />}
       </div>
       <Outlet />
     </>

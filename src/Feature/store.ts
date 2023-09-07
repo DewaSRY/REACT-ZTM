@@ -5,10 +5,10 @@ import createSagaMiddleware from "redux-saga";
 import { all, call } from "typed-redux-saga";
 import cartSlice from "./Cart/cartSlice";
 import catagoriesSlice from "./Catagorise/catagoriesSlice";
-import userSlice from "./User/userSlice";
+import userSlice, { userAction } from "./User/userSlice";
 import { categoriesSaga } from "./Catagorise/catagoriesSaga";
+import { userSagas } from "./User/userSaage";
 import { useMemo } from "react";
-// import { userSagas } from "./user.saga";
 
 const sagaMiddleWare = createSagaMiddleware();
 const store = configureStore({
@@ -26,7 +26,7 @@ type RootState = ReturnType<typeof store.getState>;
 type ActionDispatch = typeof store.dispatch;
 
 export function* rootSaga() {
-  yield* all([call(categoriesSaga)]);
+  yield* all([call(categoriesSaga), call(userSagas)]);
 }
 sagaMiddleWare.run(rootSaga);
 
@@ -38,8 +38,14 @@ export function useDispatchAction() {
     () => bindActionCreators(catagoriesSlice.actions, dispatch),
     [dispatch]
   );
+  const { googleSignInStart, emailSignInStart, signUpStart, signOutStart } =
+    bindActionCreators(userAction, dispatch);
   return {
     ...bindActionCreators(cartSlice.actions, dispatch),
+    googleSignInStart,
+    emailSignInStart,
+    signUpStart,
+    signOutStart,
     fetchCatagoriesStart,
   };
 }

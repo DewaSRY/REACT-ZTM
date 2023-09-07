@@ -1,14 +1,14 @@
 import style from "./Shop.module.scss";
 import { Routes, Route, Link, useParams } from "react-router-dom";
-import { Button, Spinner } from "../../component";
+import { Button, Spinner } from "../component";
 import { useState, useEffect, FC } from "react";
-import { useProducts, useCart } from "../../hooks";
-import { CategoryItem } from "../../state";
+import { useDispatchAction, useSelectors } from "../Feature/store";
+import { CategoryItem } from "../utils/typeUtil";
 
 const Card: FC<{ items: CategoryItem }> = ({ items }) => {
-  const { addItem } = useCart();
+  const { addCartItem } = useDispatchAction();
   const { imageUrl, price, name } = items;
-  const handleClick = () => addItem(items);
+  const handleClick = () => addCartItem(items);
   return (
     <div className={style["product-card-container"]}>
       <img src={imageUrl} alt={name} />
@@ -24,7 +24,13 @@ const Card: FC<{ items: CategoryItem }> = ({ items }) => {
 };
 
 const Previews: FC = () => {
-  const { cataGoriesMap, isLoading } = useProducts();
+  const { categories, isLoading } = useSelectors((s) => s.catagories);
+  const cataGoriesMap = categories.reduce((map, product) => {
+    const { title, items } = product;
+    map[title.toLowerCase()] = items;
+    return map;
+  }, {});
+  console.log(categories);
   return (
     <>
       {isLoading ? (
@@ -38,6 +44,7 @@ const Previews: FC = () => {
     </>
   );
 };
+
 const Preview: FC<{
   title: string;
   products: CategoryItem[];
@@ -57,7 +64,13 @@ const Preview: FC<{
 
 const CategoryProducts: FC = () => {
   const { category } = useParams();
-  const { cataGoriesMap } = useProducts();
+  const { categories } = useSelectors((s) => s.catagories);
+  const cataGoriesMap = categories.reduce((map, product) => {
+    const { title, items } = product;
+    map[title.toLowerCase()] = items;
+    return map;
+  }, {});
+
   const [products, setProducts] = useState(cataGoriesMap[category]);
   useEffect(() => {
     const product = cataGoriesMap[category];
@@ -75,11 +88,10 @@ const CategoryProducts: FC = () => {
   );
 };
 export function Shope() {
-  const { fetchCategoriesStart } = useProducts();
-  // const { fetchCategoriesAsync } = useDispatchAction();
+  const { fetchCatagoriesStart } = useDispatchAction();
   useEffect(() => {
-    fetchCategoriesStart();
-  }, [fetchCategoriesStart]);
+    fetchCatagoriesStart();
+  }, [fetchCatagoriesStart]);
   return (
     <Routes>
       <Route index element={<Previews />} />

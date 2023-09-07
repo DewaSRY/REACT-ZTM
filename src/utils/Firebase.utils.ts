@@ -24,7 +24,6 @@ import {
 } from "firebase/firestore";
 
 import { Categories } from "./typeUtil";
-// import { Category } from '../../store/categories/category.types';
 const firebaseConfig = {
   apiKey: "AIzaSyCIiQNscpjM2Ii5rmzk98i9MhqT79H2Zzo",
   authDomain: "dewa-learn-react-ztm.firebaseapp.com",
@@ -70,23 +69,11 @@ export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
 export const getCategoriesAndDocuments = async (): Promise<Categories[]> => {
   const collectionRef = collection(db, "Catagories");
   const q = query(collectionRef);
-
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(
     (docSnapshot) => docSnapshot.data() as Categories
   );
 };
-// export const getCategoriesAndDocuments = async (): Promise<ProductMap> => {
-//   const collectionRef = collection(db, "Catagories");
-//   const q = query(collectionRef);
-
-//   const querySnapshot = await getDocs(q);
-//   return querySnapshot.docs.reduce((products, item) => {
-//     const { title, items } = item.data();
-//     products[title.toLowerCase()] = items;
-//     return products;
-//   }, {} as ProductMap);
-// };
 
 export type AdditionalInformation = {
   displayName?: string;
@@ -102,7 +89,6 @@ export const createUserDocumentFromAuth = async (
   additionalInformation = {} as AdditionalInformation
 ): Promise<void | QueryDocumentSnapshot<UserData>> => {
   if (!userAuth) return;
-  console.log("hite");
   const userDocRef = doc(db, "users", userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
   if (!userSnapshot.exists()) {
@@ -127,21 +113,16 @@ export const createAuthUserWithEmailAndPassword = async (
   password: string
 ) => {
   if (!email || !password) return;
-
   return await createUserWithEmailAndPassword(auth, email, password);
 };
-
 export const signInAuthUserWithEmailAndPassword = async (
   email: string,
   password: string
 ) => {
   if (!email || !password) return;
-
   return await signInWithEmailAndPassword(auth, email, password);
 };
-
 export const signOutUser = async () => await signOut(auth);
-
 export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
   onAuthStateChanged(auth, callback);
 
@@ -156,6 +137,5 @@ export const getCurrentUser = (): Promise<User | null> => {
       },
       reject
     );
-    console.log(unsubscribe);
   });
 };

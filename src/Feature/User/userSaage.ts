@@ -1,6 +1,5 @@
 import { takeLatest, put, all, call } from "typed-redux-saga";
 import { User } from "firebase/auth";
-
 import { userAction } from "./userSlice";
 const {
   signInSuccess,
@@ -23,7 +22,7 @@ import {
   createAuthUserWithEmailAndPassword,
   signOutUser,
   AdditionalInformation,
-} from "../../utils";
+} from "../../utils/Firebase.utils";
 
 export function* getSnapshotFromUserAuth(
   userAuth: User,
@@ -76,9 +75,7 @@ export function* isUserAuthenticated() {
     yield* put(signInFailed(error as Error));
   }
 }
-
 export function* signUp({ payload: { displayName, email, password } }) {
-  console.log("hite", email, password, displayName);
   try {
     const userCredential = yield* call(
       createAuthUserWithEmailAndPassword,
@@ -118,7 +115,6 @@ function* onEmailSignInStart() {
 function* onSignUpStart() {
   yield* takeLatest(signUpStart, signUp);
 }
-
 function* onSignUpSuccess() {
   yield* takeLatest(signUpSuccess, signInAfterSignUp);
 }

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAction } from "@reduxjs/toolkit";
-import { UserData, AdditionalInformation } from "../../utils";
+import { UserData, AdditionalInformation } from "../../utils/Firebase.utils";
 import { User } from "firebase/auth";
 const name = "users";
 

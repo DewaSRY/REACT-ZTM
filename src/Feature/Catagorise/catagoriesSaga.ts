@@ -1,28 +1,21 @@
 import { takeLatest, call, put, all } from "typed-redux-saga";
 
 import { getCategoriesAndDocuments } from "../../utils";
-import {
-  fetchCategoriesSuccess,
-  fetchCategoriesFailed,
-} from "../Action-Type/category.action";
-import { CATEGORIES_ACTION_TYPES } from "../types/category.types";
+import catagoriesSlice from "./catagoriesSlice";
+const { fetchCatagoriesStart, fetchCatagoriesFailed, fetchCatagoriesSuccess } =
+  catagoriesSlice.actions;
 
 export function* fetchCategoriesAsync() {
   try {
     const categoriesArray = yield* call(getCategoriesAndDocuments);
-    yield* put(fetchCategoriesSuccess(categoriesArray));
+    yield* put(fetchCatagoriesSuccess(categoriesArray));
   } catch (error) {
-    yield* put(fetchCategoriesFailed(error as Error));
+    yield* put(fetchCatagoriesFailed(error as Error));
   }
 }
-
 export function* onFetchCategories() {
-  yield* takeLatest(
-    CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START,
-    fetchCategoriesAsync
-  );
+  yield* takeLatest(fetchCatagoriesStart.type, fetchCategoriesAsync);
 }
-
 export function* categoriesSaga() {
   yield* all([call(onFetchCategories)]);
 }

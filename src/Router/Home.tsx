@@ -1,5 +1,5 @@
 import style from "./HomeDirectory.module.scss";
-import { CATAGORIES } from "../../Assets/CATAGORIES";
+import { CATAGORIES } from "../Assets/CATAGORIES";
 import { Link } from "react-router-dom";
 
 const CategoryPage = ({ items }) => {

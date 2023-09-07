@@ -1,12 +1,16 @@
 import { Routes, Route } from "react-router-dom";
-import {
-  HomeDirectory,
-  Shope,
-  Checkout,
-  Navigation,
-  Authentication,
-} from "./Router/";
+import { Shope } from "./Router/Shop";
+import { HomeDirectory } from "./Router/Home";
+import { Checkout } from "./Router/Checkout";
+import { Navigation } from "./Router/Navigation";
+import { Authentication } from "./Router/Authentication";
+import { useDispatchAction } from "./Feature/store";
+import { useEffect } from "react";
 function App() {
+  const { checkUserSession } = useDispatchAction();
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession]);
   return (
     <Routes>
       <Route path="" element={<Navigation />}>

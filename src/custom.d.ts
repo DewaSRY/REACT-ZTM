@@ -12,10 +12,6 @@ declare module "*.png";
 declare module "*.jpg";
 declare module "*.jpeg";
 
-// declare module "*.svg" {
-//   import react = require("react");
-//   export const ReactComponent : react.fc<react.SVGProps<SVGSVGElement>>;
-// }
 declare module "*.svg" {
   import React = require("react");
   export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;

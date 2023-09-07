@@ -1,15 +1,14 @@
 import style from "./Shop.module.scss";
-import { Routes, Route, Link } from "react-router-dom";
-import { Button, BUTTON_TYPE_CLASSES, Spinner } from "../../component";
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useProducts, useCart } from "../../hooks";
-import { CategoryItem } from "../../state";
+import { Routes, Route, Link, useParams } from "react-router-dom";
+import { Button, Spinner } from "../component";
+import { useState, useEffect, FC } from "react";
+import { useDispatchAction, useSelectors } from "../Feature/store";
+import { CategoryItem } from "../utils/typeUtil";
 
-const Card = ({ items }: { items: CategoryItem }) => {
-  const { addItem } = useCart();
+const Card: FC<{ items: CategoryItem }> = ({ items }) => {
+  const { addCartItem } = useDispatchAction();
   const { imageUrl, price, name } = items;
-  const handleClick = () => addItem(items);
+  const handleClick = () => addCartItem(items);
   return (
     <div className={style["product-card-container"]}>
       <img src={imageUrl} alt={name} />
@@ -17,15 +16,20 @@ const Card = ({ items }: { items: CategoryItem }) => {
         <span className={style.name}>{name}</span>
         <span className={style.price}>{price}</span>
       </div>
-      <Button buttonType={BUTTON_TYPE_CLASSES.INVERTED} onClick={handleClick}>
+      <Button buttonType="inverted" onClick={handleClick}>
         Add Item
       </Button>
     </div>
   );
 };
 
-const Previews = () => {
-  const { cataGoriesMap, isLoading } = useProducts();
+const Previews: FC = () => {
+  const { categories, isLoading } = useSelectors((s) => s.catagories);
+  const cataGoriesMap = categories.reduce((map, product) => {
+    const { title, items } = product;
+    map[title.toLowerCase()] = items;
+    return map;
+  }, {});
   return (
     <>
       {isLoading ? (
@@ -39,13 +43,11 @@ const Previews = () => {
     </>
   );
 };
-const Preview = ({
-  title,
-  products,
-}: {
+
+const Preview: FC<{
   title: string;
   products: CategoryItem[];
-}) => {
+}> = ({ title, products }) => {
   const previewCategory = products
     .filter((_, idx) => idx < 4)
     .map((product) => <Card key={product.id} items={product} />);
@@ -59,9 +61,15 @@ const Preview = ({
   );
 };
 
-const CategoryProducts = () => {
+const CategoryProducts: FC = () => {
   const { category } = useParams();
-  const { cataGoriesMap } = useProducts();
+  const { categories } = useSelectors((s) => s.catagories);
+  const cataGoriesMap = categories.reduce((map, product) => {
+    const { title, items } = product;
+    map[title.toLowerCase()] = items;
+    return map;
+  }, {});
+
   const [products, setProducts] = useState(cataGoriesMap[category]);
   useEffect(() => {
     const product = cataGoriesMap[category];
@@ -79,11 +87,10 @@ const CategoryProducts = () => {
   );
 };
 export function Shope() {
-  const { fetchCategoriesStartAsync } = useProducts();
+  const { fetchCatagoriesStart } = useDispatchAction();
   useEffect(() => {
-    fetchCategoriesStartAsync();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchCatagoriesStart();
+  }, [fetchCatagoriesStart]);
   return (
     <Routes>
       <Route index element={<Previews />} />

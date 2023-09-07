@@ -1,11 +1,18 @@
 import style from "./Navigation.module.scss";
-import { useNavigate } from "react-router-dom";
-import { Crwn, ShoppingBags } from "../../Assets";
-import { Outlet, Link } from "react-router-dom";
-import { signOutUser } from "../../utils/Firebase.utils";
-import { useUser, useCart } from "../../hooks";
-import { Button } from "../../component";
-import { CartItems } from "../../Store";
+import { Crwn, ShoppingBags } from "../Assets";
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import { useDispatchAction, useSelectors } from "../Feature/store";
+import { Button } from "../component";
+import { FC } from "react";
+interface CartItemProps {
+  cartItem: {
+    id: number;
+    imageUrl: string;
+    name: string;
+    price: number;
+    quantity: number;
+  };
+}
 
 const SignInLink = () => (
   <Link className={style["nav-link"]} to="Authentication">
@@ -13,12 +20,12 @@ const SignInLink = () => (
   </Link>
 );
 
-const SignOutLink = () => (
-  <span className={style["nav-link"]} onClick={signOutUser}>
+const SignOutLink = ({ onCLick }: { onCLick: () => void }) => (
+  <span className={style["nav-link"]} onClick={onCLick}>
     SIGN OUT
   </span>
 );
-const CartItem = ({ cartItem }: { cartItem: CartItems }) => {
+const CartItem: FC<CartItemProps> = ({ cartItem }) => {
   const { name, quantity, imageUrl, price } = cartItem;
   return (
     <div className={style["cart-item-container"]}>
@@ -32,14 +39,19 @@ const CartItem = ({ cartItem }: { cartItem: CartItems }) => {
     </div>
   );
 };
-const CartIcon = () => {
-  const { cartCount, openCart } = useCart();
+const CartIcon: FC = () => {
+  const { cartItems } = useSelectors((s) => s.cart);
+  const { setCartOpen } = useDispatchAction();
+  const cartCount = cartItems.reduce(
+    (total, cartItem) => total + cartItem.quantity,
+    0
+  );
   const navigate = useNavigate();
   function CartHalle() {
     if (!cartCount) {
       return navigate("/checkout");
     }
-    openCart();
+    setCartOpen();
   }
   return (
     <div className={style["cart-icon-container"]} onClick={CartHalle}>
@@ -49,12 +61,13 @@ const CartIcon = () => {
   );
 };
 
-const CartDropDown = () => {
-  const { cartItems, openCart } = useCart();
+const CartDropDown: FC = () => {
+  const { cartItems } = useSelectors((s) => s.cart);
+  const { setCartOpen } = useDispatchAction();
   const navigate = useNavigate();
   const goToCheckoutHandler = () => {
     navigate("/checkout");
-    openCart();
+    setCartOpen();
   };
   const CartDropdownItems = cartItems.map((item) => (
     <CartItem key={item.id} cartItem={item} />
@@ -66,9 +79,10 @@ const CartDropDown = () => {
     </div>
   );
 };
-export function Navigation() {
-  const { currentUser } = useUser();
-  const { isCartOpen } = useCart();
+export const Navigation: FC = () => {
+  const { currentUser } = useSelectors((s) => s.users);
+  const { isCartOpen } = useSelectors((s) => s.cart);
+  const { signOutStart } = useDispatchAction();
   return (
     <>
       <div className={style["navigation"]}>
@@ -79,7 +93,11 @@ export function Navigation() {
           <Link className={style["nav-link"]} to="shop">
             Shop
           </Link>
-          {currentUser ? <SignOutLink /> : <SignInLink />}
+          {currentUser ? (
+            <SignOutLink onCLick={signOutStart} />
+          ) : (
+            <SignInLink />
+          )}
           <CartIcon />
         </div>
         {isCartOpen && <CartDropDown />}
@@ -87,4 +105,4 @@ export function Navigation() {
       <Outlet />
     </>
   );
-}
+};

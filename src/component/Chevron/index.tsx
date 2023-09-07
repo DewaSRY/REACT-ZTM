@@ -1,24 +1,11 @@
 import style from "./Chevron.module.scss";
-import { ButtonHTMLAttributes } from "react";
-
-// eslint-disable-next-line react-refresh/only-export-components
-export enum CHEVRON_TYPE_CLASSES {
-  CROSS = "cross",
-  RIGHT = "right-arrow",
-  LEFT = "left-arrow",
-}
-
-export type ChevronTypes =
-  | CHEVRON_TYPE_CLASSES.CROSS
-  | CHEVRON_TYPE_CLASSES.LEFT
-  | CHEVRON_TYPE_CLASSES.RIGHT;
+import { ButtonHTMLAttributes, FC } from "react";
 
 type IChevron = {
-  chevron: ChevronTypes;
+  chevron: "cross" | "right-arrow" | "left-arrow";
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export function Chevron({ chevron, ...otherProps }: IChevron) {
-  const chevronOption: ChevronTypes = chevron;
-  const chevronClass = [style.iconButton, style[chevronOption]].join(" ");
+export const Chevron: FC<IChevron> = ({ chevron, ...otherProps }) => {
+  const chevronClass = [style.iconButton, style[chevron]].join(" ");
   return <button className={chevronClass} {...otherProps}></button>;
-}
+};

@@ -23,7 +23,7 @@ import {
   QueryDocumentSnapshot,
 } from "firebase/firestore";
 
-import { Category } from "../state";
+import { Categories } from "./typeUtil";
 // import { Category } from '../../store/categories/category.types';
 const firebaseConfig = {
   apiKey: "AIzaSyCIiQNscpjM2Ii5rmzk98i9MhqT79H2Zzo",
@@ -33,15 +33,7 @@ const firebaseConfig = {
   messagingSenderId: "383517192896",
   appId: "1:383517192896:web:757c82a31522563af53325",
 };
-// export type AdditionalInformation = {
-//   displayName?: string;
-// };
 
-// export type UserData = {
-//   createdAt: Date;
-//   displayName: string;
-//   email: string;
-// };
 export const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
@@ -68,22 +60,20 @@ export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
 ): Promise<void> => {
   const collectionRef = collection(db, collectionKey);
   const batch = writeBatch(db);
-
   objectsToAdd.forEach((object) => {
     const docRef = doc(collectionRef, object.title.toLowerCase());
     batch.set(docRef, object);
   });
-
   await batch.commit();
   console.log("done");
 };
-export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
+export const getCategoriesAndDocuments = async (): Promise<Categories[]> => {
   const collectionRef = collection(db, "Catagories");
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(
-    (docSnapshot) => docSnapshot.data() as Category
+    (docSnapshot) => docSnapshot.data() as Categories
   );
 };
 // export const getCategoriesAndDocuments = async (): Promise<ProductMap> => {
@@ -101,7 +91,6 @@ export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
 export type AdditionalInformation = {
   displayName?: string;
 };
-
 export type UserData = {
   createdAt: Date;
   displayName: string;
@@ -113,15 +102,12 @@ export const createUserDocumentFromAuth = async (
   additionalInformation = {} as AdditionalInformation
 ): Promise<void | QueryDocumentSnapshot<UserData>> => {
   if (!userAuth) return;
-
+  console.log("hite");
   const userDocRef = doc(db, "users", userAuth.uid);
-
   const userSnapshot = await getDoc(userDocRef);
-
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
-
     try {
       await setDoc(userDocRef, {
         displayName,
@@ -133,7 +119,6 @@ export const createUserDocumentFromAuth = async (
       console.log("error creating the user", error);
     }
   }
-
   return userSnapshot as QueryDocumentSnapshot<UserData>;
 };
 

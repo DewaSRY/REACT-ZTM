@@ -1,10 +1,10 @@
 import style from "./Input.module.scss";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, FC } from "react";
 type IInput = {
   label: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export function Inputs({ label, ...otherProps }: IInput) {
+export const Inputs: FC<IInput> = ({ label, ...otherProps }) => {
   const inputShirk = otherProps.value ? style["form-input-label"] : "";
   return (
     <div role="input" className={style.group}>
@@ -12,4 +12,4 @@ export function Inputs({ label, ...otherProps }: IInput) {
       <label className={inputShirk}>{label}</label>
     </div>
   );
-}
+};

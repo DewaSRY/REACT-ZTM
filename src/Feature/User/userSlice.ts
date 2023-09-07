@@ -20,9 +20,9 @@ const userSlice = createSlice({
       state.currentUser = null;
     },
   },
-  // extraReducers(builder) {
-  //   builder.addCase(checkUserSession, (state) => state);
-  // },
+  extraReducers(builder) {
+    builder.addCase(signUpStart, (state) => state);
+  },
 });
 
 const checkUserSession = createAction(`users/checkUserSession`);
@@ -51,15 +51,28 @@ const signInSuccess = createAction(
 const signInFailed = createAction(`users/signInFailed`, (error: Error) => ({
   payload: error,
 }));
+// const signUpStart = createAction(
+//   `users/signUpStart`,
+//   (email: string, password: string, displayName: string) => ({
+//     payload: {
+//       email,
+//       password,
+//       displayName,
+//     },
+//   })
+// );
 const signUpStart = createAction(
   `users/signUpStart`,
-  (email: string, password: string, displayName: string) => ({
-    payload: {
-      email,
-      password,
-      displayName,
-    },
-  })
+  (email: string, password: string, displayName: string) => {
+    console.log("test hite");
+    return {
+      payload: {
+        email,
+        password,
+        displayName,
+      },
+    };
+  }
 );
 const signUpSuccess = createAction(
   `users/signUpSuccess`,

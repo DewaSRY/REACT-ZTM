@@ -9,7 +9,7 @@ import userSlice, { userAction } from "./User/userSlice";
 import { categoriesSaga } from "./Catagorise/catagoriesSaga";
 import { userSagas } from "./User/userSaage";
 import { useMemo } from "react";
-
+import logger from "redux-logger";
 const sagaMiddleWare = createSagaMiddleware();
 const store = configureStore({
   reducer: {
@@ -17,8 +17,12 @@ const store = configureStore({
     catagories: catagoriesSlice.reducer,
     users: userSlice.reducer,
   },
-  middleware: (md) => {
-    return md().concat(sagaMiddleWare);
+  middleware: (getDefaultMiddleWare) => {
+    return getDefaultMiddleWare({
+      serializableCheck: false,
+    })
+      .concat(sagaMiddleWare)
+      .concat(logger);
   },
 });
 
@@ -38,14 +42,20 @@ export function useDispatchAction() {
     () => bindActionCreators(catagoriesSlice.actions, dispatch),
     [dispatch]
   );
-  const { googleSignInStart, emailSignInStart, signUpStart, signOutStart } =
-    bindActionCreators(userAction, dispatch);
+  const {
+    googleSignInStart,
+    emailSignInStart,
+    signUpStart,
+    signOutStart,
+    checkUserSession,
+  } = bindActionCreators(userAction, dispatch);
   return {
     ...bindActionCreators(cartSlice.actions, dispatch),
     googleSignInStart,
     emailSignInStart,
     signUpStart,
     signOutStart,
+    checkUserSession,
     fetchCatagoriesStart,
   };
 }

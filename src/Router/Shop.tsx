@@ -30,7 +30,6 @@ const Previews: FC = () => {
     map[title.toLowerCase()] = items;
     return map;
   }, {});
-  console.log(categories);
   return (
     <>
       {isLoading ? (

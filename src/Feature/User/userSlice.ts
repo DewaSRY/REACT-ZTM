@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction, createAction } from "@reduxjs/toolkit";
-import { UserData, AdditionalInformation } from "../../utils/Firebase.utils";
+import { UserData, AdditionalInformation } from "@utils/Firebase.utils";
 import { User } from "firebase/auth";
 const name = "users";
-
 const userSlice = createSlice({
   name,
   initialState: {
@@ -51,16 +50,7 @@ const signInSuccess = createAction(
 const signInFailed = createAction(`users/signInFailed`, (error: Error) => ({
   payload: error,
 }));
-// const signUpStart = createAction(
-//   `users/signUpStart`,
-//   (email: string, password: string, displayName: string) => ({
-//     payload: {
-//       email,
-//       password,
-//       displayName,
-//     },
-//   })
-// );
+
 const signUpStart = createAction(
   `users/signUpStart`,
   (email: string, password: string, displayName: string) => {

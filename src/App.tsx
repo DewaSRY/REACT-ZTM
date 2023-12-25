@@ -1,14 +1,16 @@
 import { Routes, Route } from "react-router-dom";
-import { Shope } from "./Router/Shop";
-import { HomeDirectory } from "./Router/Home";
-import { Checkout } from "./Router/Checkout";
-import { Navigation } from "./Router/Navigation";
-import { Authentication } from "./Router/Authentication";
-import { useDispatchAction } from "./Feature/store";
+import Shope from "@pages/Shops";
+import HomeDirectory from "@pages/Home";
+import Checkout from "@pages/Checkout";
+import Authentication from "@pages/Authentication";
+import { Navigation } from "./layout/Navigation";
+// import Category from "./pages/Category";
+import { useDispatchAction } from "@feature/store";
 import { useEffect } from "react";
 function App() {
   const { checkUserSession } = useDispatchAction();
   useEffect(() => {
+    console.log(checkUserSession());
     checkUserSession();
   }, [checkUserSession]);
   return (

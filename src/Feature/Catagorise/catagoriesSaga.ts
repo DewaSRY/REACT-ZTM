@@ -1,6 +1,6 @@
 import { takeLatest, call, put, all } from "typed-redux-saga";
 
-import { getCategoriesAndDocuments } from "../../utils/Firebase.utils";
+import { getCategoriesAndDocuments } from "@utils/Firebase.utils";
 import catagoriesSlice from "./catagoriesSlice";
 const { fetchCatagoriesStart, fetchCatagoriesFailed, fetchCatagoriesSuccess } =
   catagoriesSlice.actions;

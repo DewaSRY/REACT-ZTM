@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Categories } from "../../utils/typeUtil";
+import { Categories, CategoryItem } from "@utils/typeUtil";
 const name = "catagories";
 
 const catagoriesSlice = createSlice({
@@ -8,6 +8,7 @@ const catagoriesSlice = createSlice({
     categories: [] as Categories[],
     isLoading: false,
     error: null as Error | null,
+    categoryMap: {} as Record<string, CategoryItem[]>,
   },
   reducers: {
     fetchCatagoriesStart(state) {
@@ -15,12 +16,26 @@ const catagoriesSlice = createSlice({
     },
     fetchCatagoriesSuccess(state, action: PayloadAction<Categories[]>) {
       state.categories = action.payload;
+      state.categoryMap = action.payload.reduce((map, prevItems) => {
+        const { items, title } = prevItems;
+        map[title] = items;
+        return map;
+      }, {});
       state.isLoading = false;
     },
     fetchCatagoriesFailed(state, action: PayloadAction<Error>) {
       state.isLoading = false;
       state.error = action.payload;
     },
+    // getCategoryMap(state) {
+    //   if (!state.CategoryMap) {
+    //     state.CategoryMap = state.categories.reduce((map, prevItems) => {
+    //       const { items, title } = prevItems;
+    //       map[title] = items;
+    //       return map;
+    //     }, {});
+    //   }
+    // },
   },
 });
 

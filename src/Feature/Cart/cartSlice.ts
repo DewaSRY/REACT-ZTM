@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CartItem, CategoryItem } from "../../utils/typeUtil";
+import { CartItem, CategoryItem } from "@utils/typeUtil";
 const cartSlice = createSlice({
   name: "cart",
   initialState: {

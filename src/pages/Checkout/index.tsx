@@ -15,6 +15,7 @@ const Items: ItemsComponents = ({ cartItem }) => {
     clearCartItem(cartItem.id);
   };
   const handledAddCartItem = () => () => {
+    console.log("halloo");
     addCartItem(cartItem);
   };
   const handledRemoveCartItem = () => () => {
@@ -27,12 +28,12 @@ const Items: ItemsComponents = ({ cartItem }) => {
       </div>
       <span className={style.name}> {name} </span>
       <span className={style.quantity}>
-        <Buttons onClick={handledRemoveCartItem}> {"<"}</Buttons>
+        <Buttons onClick={handledRemoveCartItem()}> {"<"}</Buttons>
         <span className={style.value}>{quantity}</span>
-        <Buttons onClick={handledAddCartItem}> {">"}</Buttons>
+        <Buttons onClick={handledAddCartItem()}> {">"}</Buttons>
       </span>
       <span className={style.price}> {price}</span>
-      <Buttons onClick={handleClearItems}> {"X"}</Buttons>
+      <Buttons onClick={handleClearItems()}> {"X"}</Buttons>
     </div>
   );
 };
@@ -64,7 +65,6 @@ const Checkout: FC = () => {
     (total, item) => total + item.quantity * item.price,
     0
   );
-
   return (
     <div className={style["checkout-container"]}>
       <div className={style["checkout-header"]}>

@@ -1,15 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
 import { bindActionCreators } from "redux";
-import createSagaMiddleware from "redux-saga";
 import { all, call } from "typed-redux-saga";
 import cartSlice from "./Cart/cartSlice";
-import catagoriesSlice from "./Catagorise/catagoriesSlice";
 import userSlice, { userAction } from "./User/userSlice";
+import catagoriesSlice from "./Catagorise/catagoriesSlice";
 import { categoriesSaga } from "./Catagorise/catagoriesSaga";
 import { userSagas } from "./User/userSaage";
 import { useMemo } from "react";
 import logger from "redux-logger";
+import createSagaMiddleware from "redux-saga";
+
 const sagaMiddleWare = createSagaMiddleware();
 const store = configureStore({
   reducer: {
@@ -27,7 +28,7 @@ const store = configureStore({
 });
 
 type RootState = ReturnType<typeof store.getState>;
-type ActionDispatch = typeof store.dispatch;
+export type ActionDispatch = typeof store.dispatch;
 
 export function* rootSaga() {
   yield* all([call(categoriesSaga), call(userSagas)]);
@@ -49,6 +50,7 @@ export function useDispatchAction() {
     signOutStart,
     checkUserSession,
   } = bindActionCreators(userAction, dispatch);
+
   return {
     ...bindActionCreators(cartSlice.actions, dispatch),
     googleSignInStart,

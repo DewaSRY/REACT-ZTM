@@ -8,6 +8,7 @@ export type CategoryItem = {
 export type CartItem = CategoryItem & {
   quantity: number;
 };
+
 export type Categories = {
   title: string;
   items: CategoryItem[];

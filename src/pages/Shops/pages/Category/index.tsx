@@ -1,23 +1,13 @@
 import { useParams } from "react-router-dom";
 import { FC, useMemo } from "react";
-import style from "./Shop.module.scss";
 import { useSelectors } from "@feature/store";
+import ContainerProduct from "@/pages/Shops/containers/ContainerProduct";
 
-import Card from "@/components/CardsProduct";
 const CategoryProducts: FC = () => {
   const { category } = useParams();
   const { categoryMap } = useSelectors((s) => s.catagories);
   const products = useMemo(() => categoryMap[category], [category]);
-  return (
-    <>
-      <h2 className={style["category-title"]}>{category.toUpperCase()}</h2>
-      <div className={style["category-container"]}>
-        {products
-          ? products.map((product) => <Card key={product.id} items={product} />)
-          : null}
-      </div>
-    </>
-  );
+  return <ContainerProduct products={products} title={category} />;
 };
 
 export default CategoryProducts;

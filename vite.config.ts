@@ -36,12 +36,12 @@ export default defineConfig({
       "@common": fileURLToPath(new URL("./src/common/", import.meta.url)),
       "@assets": fileURLToPath(new URL("./src/assets/", import.meta.url)),
       "@feature": fileURLToPath(new URL("./src/feature/", import.meta.url)),
+      "@redux": fileURLToPath(new URL("./src/feature/redux/", import.meta.url)),
       "@utils": fileURLToPath(new URL("./src/utils/", import.meta.url)),
       "@pages": fileURLToPath(new URL("./src/pages/", import.meta.url)),
-      "@components": fileURLToPath(
-        new URL("./src/components/", import.meta.url)
-      ),
       "@style": fileURLToPath(new URL("./src/style/", import.meta.url)),
+      "@lib": fileURLToPath(new URL("./src/lib/", import.meta.url)),
+      "@type": fileURLToPath(new URL("./src/type/", import.meta.url)),
     },
   },
 });

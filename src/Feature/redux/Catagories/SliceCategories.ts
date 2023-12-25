@@ -27,15 +27,6 @@ const catagoriesSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    // getCategoryMap(state) {
-    //   if (!state.CategoryMap) {
-    //     state.CategoryMap = state.categories.reduce((map, prevItems) => {
-    //       const { items, title } = prevItems;
-    //       map[title] = items;
-    //       return map;
-    //     }, {});
-    //   }
-    // },
   },
 });
 

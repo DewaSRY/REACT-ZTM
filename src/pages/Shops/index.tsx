@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { useDispatchAction } from "@feature/store";
+// import { useDispatchAction } from "@redux/store";
+import { useDispatchAction } from "@redux/store";
 import { useEffect } from "react";
 
 import Previews from "./pages/Previews";

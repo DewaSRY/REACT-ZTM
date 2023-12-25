@@ -1,4 +1,4 @@
-import { useSelectors } from "@feature/store";
+import { useSelectors } from "@redux/store";
 import { FC } from "react";
 import Spinier from "@common/Spinier";
 import ContainerProduct from "@/pages/Shops/containers/ContainerProduct";

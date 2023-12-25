@@ -1,7 +1,7 @@
 import style from "./Navigation.module.scss";
 import { Crwn, ShoppingBags } from "../assets/svg";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useDispatchAction, useSelectors } from "@feature/store";
+import { useDispatchAction, useSelectors } from "@redux/store";
 import Button from "@common/Button";
 import { FC } from "react";
 interface CartItemProps {

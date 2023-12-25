@@ -5,7 +5,7 @@ import Checkout from "@pages/Checkout";
 import Authentication from "@pages/Authentication";
 import { Navigation } from "./layout/Navigation";
 // import Category from "./pages/Category";
-import { useDispatchAction } from "@feature/store";
+import { useDispatchAction } from "@redux/store";
 import { useEffect } from "react";
 function App() {
   const { checkUserSession } = useDispatchAction();

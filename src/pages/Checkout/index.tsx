@@ -1,5 +1,6 @@
 import style from "./Checkout.module.scss";
-import { useDispatchAction, useSelectors } from "@feature/store";
+import { useSelectors } from "@redux/store";
+import useCarHandler from "@redux/Cart/useCarHandler";
 import Buttons from "@/common/Button";
 import { CartItem } from "@utils/typeUtil";
 import { FC, HTMLAttributes } from "react";
@@ -10,17 +11,7 @@ interface ItemsProps extends HTMLAttributes<HTMLDivElement> {
 type ItemsComponents = FC<ItemsProps>;
 const Items: ItemsComponents = ({ cartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
-  const { addCartItem, removeCartItem, clearCartItem } = useDispatchAction();
-  const handleClearItems = () => () => {
-    clearCartItem(cartItem.id);
-  };
-  const handledAddCartItem = () => () => {
-    console.log("halloo");
-    addCartItem(cartItem);
-  };
-  const handledRemoveCartItem = () => () => {
-    removeCartItem(cartItem.id);
-  };
+  const carts = useCarHandler(cartItem);
   return (
     <div className={style["checkout-item-container"]}>
       <div className={style["image-container"]}>
@@ -28,12 +19,12 @@ const Items: ItemsComponents = ({ cartItem }) => {
       </div>
       <span className={style.name}> {name} </span>
       <span className={style.quantity}>
-        <Buttons onClick={handledRemoveCartItem()}> {"<"}</Buttons>
+        <Buttons onClick={carts.handledRemoveCartItem()}> {"<"}</Buttons>
         <span className={style.value}>{quantity}</span>
-        <Buttons onClick={handledAddCartItem()}> {">"}</Buttons>
+        <Buttons onClick={carts.handledAddCartItem()}> {">"}</Buttons>
       </span>
       <span className={style.price}> {price}</span>
-      <Buttons onClick={handleClearItems()}> {"X"}</Buttons>
+      <Buttons onClick={carts.handleClearItems()}> {"X"}</Buttons>
     </div>
   );
 };

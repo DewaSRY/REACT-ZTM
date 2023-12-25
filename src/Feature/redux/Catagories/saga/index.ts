@@ -1,7 +1,7 @@
 import { takeLatest, call, put, all } from "typed-redux-saga";
 
 import { getCategoriesAndDocuments } from "@utils/Firebase.utils";
-import catagoriesSlice from "./catagoriesSlice";
+import catagoriesSlice from "@redux/Catagories/SliceCategories";
 const { fetchCatagoriesStart, fetchCatagoriesFailed, fetchCatagoriesSuccess } =
   catagoriesSlice.actions;
 
@@ -16,6 +16,6 @@ export function* fetchCategoriesAsync() {
 export function* onFetchCategories() {
   yield* takeLatest(fetchCatagoriesStart.type, fetchCategoriesAsync);
 }
-export function* categoriesSaga() {
+export default function* categoriesSaga() {
   yield* all([call(onFetchCategories)]);
 }

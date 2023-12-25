@@ -5,7 +5,7 @@ import {
   ChangeEventHandler,
   useCallback,
 } from "react";
-import { useDispatchAction } from "@feature/store";
+import { useDispatchAction } from "@redux/store";
 // import style from "./Authentication.module.scss";
 import Forms from "@common/Form";
 import Input from "@common/Input";

@@ -5,7 +5,6 @@ interface InputProps extends InputHTMLAttributes<HTMLDivElement> {
 }
 type InputComponents = FC<InputProps>;
 const Input: InputComponents = ({ label, ...resProps }) => {
-  console.log(label);
   return (
     <label className=" w-11/12 flex flex-col my-4">
       {label}

@@ -5,10 +5,11 @@ import Checkout from "@pages/Checkout";
 import Authentication from "@pages/Authentication";
 import { Navigation } from "./layout/Navigation";
 // import Category from "./pages/Category";
-import { useDispatchAction } from "@redux/store";
 import { useEffect } from "react";
+import useCheckUser from "@redux/Authentication/hooks/useCheckUser";
+
 function App() {
-  const { checkUserSession } = useDispatchAction();
+  const { checkUserSession } = useCheckUser();
   useEffect(() => {
     console.log(checkUserSession());
     checkUserSession();

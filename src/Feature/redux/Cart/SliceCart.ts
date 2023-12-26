@@ -31,7 +31,7 @@ const cartSlice = createSlice({
       const itemId = action.payload;
       state.cartItems = state.cartItems.filter((i) => i.id !== itemId);
     },
-    setCartOpen(state) {
+    toggleCart(state) {
       state.isCartOpen = !state.isCartOpen;
     },
   },

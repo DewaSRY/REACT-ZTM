@@ -10,7 +10,7 @@ const Shope = () => {
   const { fetchCatagoriesStart } = useDispatchAction();
   useEffect(() => {
     fetchCatagoriesStart();
-  }, [fetchCatagoriesStart]);
+  }, []);
   return (
     <Routes>
       <Route index element={<Previews />} />

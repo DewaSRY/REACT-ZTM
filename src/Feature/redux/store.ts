@@ -8,7 +8,7 @@ import catagoriesSlice from "@redux/Catagories/SliceCategories";
 
 import rootSage from "@redux/rootSaga";
 
-import { useMemo } from "react";
+import { useCallback } from "react";
 import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 
@@ -37,10 +37,11 @@ export const useSelectors: TypedUseSelectorHook<RootState> = useSelector;
 export function useDispatchAction() {
   const useAppDispatch: () => ActionDispatch = useDispatch;
   const dispatch = useAppDispatch();
-  const { fetchCatagoriesStart } = useMemo(
-    () => bindActionCreators(catagoriesSlice.actions, dispatch),
-    [dispatch]
+  const { fetchCatagoriesStart: startFetch } = bindActionCreators(
+    catagoriesSlice.actions,
+    dispatch
   );
+  const fetchCatagoriesStart = useCallback(startFetch, []);
 
   return {
     fetchCatagoriesStart,

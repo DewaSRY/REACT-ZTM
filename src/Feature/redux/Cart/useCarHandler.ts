@@ -4,28 +4,28 @@ import { ActionDispatch } from "@redux/store";
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { useMemo } from "react";
-export default function useCarHandler(product: CategoryItem) {
+export default function useCarHandler() {
   const useAppDispatch: () => ActionDispatch = useDispatch;
   const dispatch = useAppDispatch();
-  const { addCartItem, clearCartItem, removeCartItem } = useMemo(
+  const { addCartItem, clearCartItem, removeCartItem, toggleCart } = useMemo(
     () => bindActionCreators(SliceCart.actions, dispatch),
     [dispatch]
   );
 
-  const handleClearItems = () => () => {
-    clearCartItem(product.id);
+  const handleClearItems = (id: number) => () => {
+    clearCartItem(id);
   };
-  const handledAddCartItem = () => () => {
-    console.log("halloo");
+  const handledAddCartItem = (product: CategoryItem) => () => {
     addCartItem(product);
   };
-  const handledRemoveCartItem = () => () => {
-    removeCartItem(product.id);
+  const handledRemoveCartItem = (id: number) => () => {
+    removeCartItem(id);
   };
 
   return {
     handleClearItems,
     handledAddCartItem,
     handledRemoveCartItem,
+    toggleCart,
   };
 }

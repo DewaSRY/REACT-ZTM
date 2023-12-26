@@ -1,9 +1,11 @@
 import style from "./Navigation.module.scss";
 import { Crwn, ShoppingBags } from "../assets/svg";
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useDispatchAction, useSelectors } from "@redux/store";
+import { useSelectors } from "@redux/store";
 import Button from "@common/Button";
 import { FC } from "react";
+import useCarHandler from "@/feature/redux/Cart/useCarHandler";
+import useSignOut from "@redux/Authentication/hooks/useSignOut";
 interface CartItemProps {
   cartItem: {
     id: number;
@@ -41,17 +43,16 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
 };
 const CartIcon: FC = () => {
   const { cartItems } = useSelectors((s) => s.cart);
-  const { setCartOpen } = useDispatchAction();
+  const { toggleCart } = useCarHandler();
   const cartCount = cartItems.reduce(
     (total, cartItem) => total + cartItem.quantity,
     0
   );
   const navigate = useNavigate();
+
   function CartHalle() {
-    if (!cartCount) {
-      return navigate("/checkout");
-    }
-    setCartOpen();
+    if (!cartCount) return navigate("/checkout");
+    toggleCart();
   }
   return (
     <div className={style["cart-icon-container"]} onClick={CartHalle}>
@@ -63,11 +64,12 @@ const CartIcon: FC = () => {
 
 const CartDropDown: FC = () => {
   const { cartItems } = useSelectors((s) => s.cart);
-  const { setCartOpen } = useDispatchAction();
+  const { toggleCart } = useCarHandler();
+
   const navigate = useNavigate();
   const goToCheckoutHandler = () => {
     navigate("/checkout");
-    setCartOpen();
+    toggleCart();
   };
   const CartDropdownItems = cartItems.map((item) => (
     <CartItem key={item.id} cartItem={item} />
@@ -82,7 +84,7 @@ const CartDropDown: FC = () => {
 export const Navigation: FC = () => {
   const { currentUser } = useSelectors((s) => s.users);
   const { isCartOpen } = useSelectors((s) => s.cart);
-  const { signOutStart } = useDispatchAction();
+  const { signOutStart } = useSignOut();
   return (
     <>
       <div className={style["navigation"]}>

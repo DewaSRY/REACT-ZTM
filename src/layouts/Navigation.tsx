@@ -81,7 +81,7 @@ const CartDropDown: FC = () => {
     </div>
   );
 };
-export const Navigation: FC = () => {
+const Navigation: FC = () => {
   const { currentUser } = useSelectors((s) => s.users);
   const { isCartOpen } = useSelectors((s) => s.cart);
   const { signOutStart } = useSignOut();
@@ -108,3 +108,5 @@ export const Navigation: FC = () => {
     </>
   );
 };
+
+export default Navigation;

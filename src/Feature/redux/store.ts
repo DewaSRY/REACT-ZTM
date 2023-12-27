@@ -26,9 +26,8 @@ const store = configureStore({
 type RootState = ReturnType<typeof store.getState>;
 type ActionDispatch = typeof store.dispatch;
 const useAppDispatch: () => ActionDispatch = useDispatch;
-const dispatch = useAppDispatch();
 sagaMiddleWare.run(rootSage);
 const useSelectors: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;
-export { dispatch, useSelectors };
+export { useSelectors, useAppDispatch };

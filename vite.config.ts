@@ -42,6 +42,7 @@ export default defineConfig({
       "@style": fileURLToPath(new URL("./src/style/", import.meta.url)),
       "@lib": fileURLToPath(new URL("./src/lib/", import.meta.url)),
       "@type": fileURLToPath(new URL("./src/type/", import.meta.url)),
+      "@layouts": fileURLToPath(new URL("./src/layouts/", import.meta.url)),
     },
   },
 });

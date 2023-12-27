@@ -10,7 +10,7 @@ interface ContainerProductProps extends HTMLAttributes<HTMLDivElement> {
 type ContainerProductComponents = FC<ContainerProductProps>;
 const ContainerProduct: ContainerProductComponents = ({
   title,
-  products,
+  products = [],
   isPreviews = false,
   ...resProps
 }) => {

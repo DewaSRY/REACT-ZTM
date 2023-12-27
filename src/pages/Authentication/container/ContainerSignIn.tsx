@@ -5,7 +5,8 @@ import {
   ChangeEventHandler,
   useCallback,
 } from "react";
-import { useDispatchAction } from "@redux/store";
+// import { useDispatchAction } from "@redux/store";
+import useSignUp from "@/feature/redux/Authentication/hooks/useSignUp";
 // import style from "./Authentication.module.scss";
 import Forms from "@common/Form";
 import Input from "@common/Input";
@@ -21,7 +22,7 @@ const signUpForm = {
 interface ContainerSigningProps extends HTMLAttributes<HTMLDivElement> {}
 type ContainerSignInComponents = FC<ContainerSigningProps>;
 const ContainerSignIn: ContainerSignInComponents = () => {
-  const { signUpStart } = useDispatchAction();
+  const { signUpStart } = useSignUp();
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value, name } = e.target;
     setFormsFields({ ...formsFields, [name]: value });

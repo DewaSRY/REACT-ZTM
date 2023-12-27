@@ -1,10 +1,6 @@
 import ActionsSignIn from "@redux/Authentication/actions/ActionsSignIn";
-import { ActionDispatch } from "@redux/store";
 import { bindActionCreators } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
-
+import { dispatch } from "@redux/store";
 export default function useSignIn() {
-  const useAppDispatch: () => ActionDispatch = useDispatch;
-  const dispatch = useAppDispatch();
   return bindActionCreators(ActionsSignIn, dispatch);
 }

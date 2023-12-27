@@ -1,12 +1,9 @@
 import { CategoryItem } from "@utils/typeUtil";
 import SliceCart from "@redux/Cart/SliceCart";
-import { ActionDispatch } from "@redux/store";
 import { bindActionCreators } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
 import { useMemo } from "react";
+import { dispatch } from "@redux/store";
 export default function useCarHandler() {
-  const useAppDispatch: () => ActionDispatch = useDispatch;
-  const dispatch = useAppDispatch();
   const { addCartItem, clearCartItem, removeCartItem, toggleCart } = useMemo(
     () => bindActionCreators(SliceCart.actions, dispatch),
     [dispatch]

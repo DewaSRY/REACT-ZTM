@@ -4,7 +4,7 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useSelectors } from "@redux/store";
 import Button from "@common/Button";
 import { FC } from "react";
-import useCarHandler from "@/feature/redux/Cart/useCarHandler";
+import useCarHandler from "@/feature/redux/Cart/hooks/useCarHandler";
 import useSignOut from "@redux/Authentication/hooks/useSignOut";
 interface CartItemProps {
   cartItem: {

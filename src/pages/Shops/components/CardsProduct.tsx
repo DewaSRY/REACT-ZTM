@@ -1,6 +1,6 @@
 import { CategoryItem } from "@/utils/typeUtil";
 import Button from "@common/Button";
-import useCarHandler from "@redux/Cart/useCarHandler";
+import useCarHandler from "@/feature/redux/Cart/hooks/useCarHandler";
 import { FC, HTMLAttributes } from "react";
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
   items: CategoryItem;

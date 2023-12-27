@@ -1,14 +1,9 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import { bindActionCreators } from "redux";
 import cartSlice from "@redux/Cart/SliceCart";
 import userSlice from "@redux/Authentication/SliceAuthentication";
-
 import catagoriesSlice from "@redux/Catagories/SliceCategories";
-
 import rootSage from "@redux/rootSaga";
-
-import { useCallback } from "react";
 import logger from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 
@@ -29,22 +24,11 @@ const store = configureStore({
 });
 
 type RootState = ReturnType<typeof store.getState>;
-export type ActionDispatch = typeof store.dispatch;
-
+type ActionDispatch = typeof store.dispatch;
+const useAppDispatch: () => ActionDispatch = useDispatch;
+const dispatch = useAppDispatch();
 sagaMiddleWare.run(rootSage);
-export const useSelectors: TypedUseSelectorHook<RootState> = useSelector;
+const useSelectors: TypedUseSelectorHook<RootState> = useSelector;
 
-export function useDispatchAction() {
-  const useAppDispatch: () => ActionDispatch = useDispatch;
-  const dispatch = useAppDispatch();
-  const { fetchCatagoriesStart: startFetch } = bindActionCreators(
-    catagoriesSlice.actions,
-    dispatch
-  );
-  const fetchCatagoriesStart = useCallback(startFetch, []);
-
-  return {
-    fetchCatagoriesStart,
-  };
-}
 export default store;
+export { dispatch, useSelectors };

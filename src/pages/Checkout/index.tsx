@@ -1,6 +1,6 @@
 import style from "./Checkout.module.scss";
 import { useSelectors } from "@redux/store";
-import useCarHandler from "@redux/Cart/useCarHandler";
+import useCarHandler from "@/feature/redux/Cart/hooks/useCarHandler";
 import Buttons from "@/common/Button";
 import { CartItem } from "@utils/typeUtil";
 import { FC, HTMLAttributes } from "react";
